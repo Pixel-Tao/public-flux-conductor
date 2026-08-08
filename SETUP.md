@@ -13,9 +13,9 @@ Run the interview when either condition holds.
 - The user asks to run setup. Then run it regardless of whether the file
   exists and update the existing values.
 
-The interview is read-only except for the files it writes. Do not install
-anything, do not change permissions, and do not create a GitHub project unless
-the user explicitly asks for it.
+The interview changes nothing outside the files this document names. Do not
+install anything, do not change permissions, and do not create a GitHub project
+unless the user explicitly asks for it.
 
 ## Interview
 
@@ -58,28 +58,42 @@ setup.
 
 ## Switching language
 
-Run these steps only when `language` is not `en`.
+The English documents are the reference copy. Every translation is produced
+from them, never from another translation.
 
-1. Move `AGENTS.md`, `SETUP.md`, `README.md`, and `docs/**` into `archive/en/`,
-   preserving the same relative paths.
-2. Write translations of those documents back at their original paths.
-3. Fix every relative link path and anchor so it matches the translated
-   headings.
-4. Leave `docs/env/ENVIRONMENT.md` at its original path. It holds values, not
-   prose, so it is not translated and not archived.
-5. Do not modify anything under `archive/en/`. It is the reference copy.
+`docs/env/` is never translated. It holds variable names and recorded values,
+and a translated key breaks setup.
+
+Run these steps when `language` is not `en`.
+
+1. When `archive/en/` does not exist, copy `AGENTS.md`, `SETUP.md`, `README.md`,
+   and everything under `docs/` except `docs/env/` into it, preserving relative
+   paths. When it already exists, it is already the reference copy. Leave it
+   untouched.
+2. Translate each document in `archive/en/` into the language set by `language`
+   and write the result at its original path. For `README.md`, when `language`
+   is `ko`, copy `README.ko.md` over `README.md` instead of translating, because
+   a Korean readme already ships. Leave `README.ko.md` in place either way.
+3. Fix every relative link path and anchor in the translated documents so each
+   one matches the translated headings.
+4. Fix the relative links and anchors in `docs/env/ENVIRONMENT.example.md` and
+   `docs/env/ENVIRONMENT.md` the same way. Both files stay in English. Only
+   their link targets change.
+5. Do not modify anything under `archive/en/` after step 1. It is the reference
+   copy, and it wins when a translation and its original conflict.
 6. Report any document that could not be translated and why.
 
-When `language` is `ko`, handle the READMEs differently. Move `README.md` to
-`archive/en/README.md`, then move `README.ko.md` to `README.md`. Do not
-translate it, because a Korean README already exists. For any other language,
-translate `README.md` and leave `README.ko.md` where it is.
+When `language` is `en`, do not create `archive/en/`.
 
 ## Reconfiguring
 
 Running setup again updates `docs/env/ENVIRONMENT.md` in place.
 
-Changing `language` after a previous switch requires restoring the English
-originals from `archive/en/` first, then running
-[switching language](#switching-language) again for the new language. Do not
-translate an existing translation.
+Changing `language` after a previous switch runs
+[switching language](#switching-language) again for the new language. Step 1
+finds `archive/en/` already present and leaves it alone, so step 2 translates
+the English reference copy rather than an existing translation.
+
+Changing `language` back to `en` is different. Copy every file from
+`archive/en/` back to its original path, delete `archive/en/`, then fix the
+links in `docs/env/` to match the restored English headings.
