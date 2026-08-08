@@ -1,0 +1,107 @@
+# Environment
+
+This file records the values that adapt the instruction documents to one
+environment. Copy it to `ENVIRONMENT.md` in the same directory and fill it in.
+The setup interview in [SETUP.md](../../SETUP.md) creates that file for you.
+
+This file records values only. It does not define policy. When a value here
+conflicts with a rule in the instruction documents, the instruction documents
+win.
+
+An agent never guesses a required value. If a required value is missing, the
+agent stops and returns to the matching interview step.
+
+## Language
+
+| Key | Value | Notes |
+|---|---|---|
+| `language` | `en` | Language for agent answers, issue bodies, and pull request descriptions. Defaults to `en`. |
+
+## GitHub
+
+| Key | Value | Required |
+|---|---|---|
+| `github.owner` | `your-account` | Yes |
+| `github.project_url` | `https://github.com/users/your-account/projects/1` | Yes. Without it, do not dispatch. |
+| `github.coordination_repo` | `your-account/your-coordination-repo` | Yes. Execution plan issues live here. |
+| `github.managed_scope` | Repositories owned by `your-account` | Yes |
+| `github.approval_phrase` | `approved` | Yes. The exact comment text that records approval. |
+
+The approval phrase is compared exactly. Choose one phrase and do not vary it.
+
+## Orchestrator
+
+| Key | Value | Required |
+|---|---|---|
+| `orchestrator.name` | `none` | Yes. Use `none` when a single agent runs everything. |
+| `orchestrator.guide_source` | Not applicable when `orchestrator.name` is `none` | Yes when an orchestrator is used |
+| `orchestrator.terms` | See the mapping table below | Yes when an orchestrator is used |
+
+When `orchestrator.name` is `none`, follow
+[no-orchestrator mode](../integrations/ORCHESTRATOR.md#no-orchestrator-mode).
+
+### Term mapping
+
+Map the role vocabulary in
+[the orchestrator guide](../integrations/ORCHESTRATOR.md#role-vocabulary) to the
+names your tool actually uses. The example below shows one possible tool.
+
+| Role term | Tool term |
+|---|---|
+| execution batch | Run |
+| work item task | Task |
+| dispatch | Dispatch |
+| worker | worker agent |
+| completion report | `worker_done` |
+| workspace | folder context and terminal |
+
+## Agent platforms
+
+| Key | Value | Required |
+|---|---|---|
+| `agent.platforms` | `claude-code` | Yes |
+| `agent.model_map` | See the table below | No. Defaults to one quality-first model. |
+
+| Platform | Default tier | Lightweight read-only tier | Escalation order |
+|---|---|---|---|
+| `claude-code` | `opus`, highest supported effort | `haiku`, default effort | `sonnet` at highest effort, then `opus` at highest effort |
+
+Verify what an alias resolves to before each dispatch. This table never
+overrides the platform's current model catalog.
+
+## Skill baselines
+
+| Key | Value | Required |
+|---|---|---|
+| `skills.baselines` | See the table below | No. When empty, the baseline gate does not apply. |
+
+| Baseline | Upstream | Installed | Verified on |
+|---|---|---|---|
+| Superpowers | `obra/superpowers` | unknown | not yet checked |
+| Ponytail | `DietrichGebert/ponytail` | unknown | not yet checked |
+| Karpathy Guidelines | `multica-ai/andrej-karpathy-skills` | unknown | not yet checked |
+
+Record the date each entry was verified. An unverified baseline is not a
+satisfied gate.
+
+## Scheduled wake
+
+| Key | Value | Required |
+|---|---|---|
+| `automation.approved` | `no` | Yes |
+| `automation.mechanism` | Not applicable while `automation.approved` is `no` | Yes when approved |
+| `automation.interval` | `10 minutes` | No. Defaults to 10 minutes. |
+
+Scheduled wake only wakes a coordinator. It grants no execution authority. See
+[continuous execution triggers](../workflows/LOOP-ENGINEERING.md#continuous-execution-triggers).
+
+The automation definition lives on the executing host. Do not commit it to this
+repository.
+
+## Verified on
+
+Record the date this file was last confirmed against the real environment.
+
+| Field | Value |
+|---|---|
+| Last verified | not yet verified |
