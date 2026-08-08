@@ -84,10 +84,12 @@ Run these steps when `language` is not `en`.
    translating. Leave `README.ko.md` in place either way.
 3. Fix every relative link path and anchor in the translated documents so each
    one matches the translated headings.
-4. Fix the relative links and anchors in `docs/env/ENVIRONMENT.example.md` and
-   `docs/env/ENVIRONMENT.md` so each one matches the headings step 3 just
-   wrote. Both files stay in English. Only their link targets change. Do not
-   touch the copy under `archive/en/`.
+4. Fix the relative links and anchors in `docs/env/ENVIRONMENT.example.md`,
+   `docs/env/ENVIRONMENT.md`, and `README.ko.md` so each one matches the
+   headings step 3 just wrote. When `language` is `ko`, fix `README.md` the
+   same way, because step 2 produced it by copying rather than translating.
+   Each of these files keeps its own language. Only their link targets change.
+   Do not touch the copies under `archive/en/`.
 5. Do not modify anything under `archive/en/` after step 1. It is the reference
    copy, and it wins when a translation and its original conflict.
 6. Report any document that could not be translated and why.
