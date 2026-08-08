@@ -59,7 +59,7 @@ The following rules still apply, with the coordinator acting as its own worker.
   [the GitHub tracker guide](TRACKER-GITHUB.md#state-transitions).
 - The `Done` criteria in
   [the operating model](../core/OPERATING-MODEL.md#completion-and-verification).
-- The failure and retry rules in [failure and retry](#failure-and-retry).
+- The failure and retry rules in [failure and retry](#failure-and-retry), except the workspace termination and cleanup rule.
 - The occupancy check in
   [continuous execution triggers](../workflows/LOOP-ENGINEERING.md#occupancy-check).
 
@@ -373,9 +373,8 @@ layout, a component, or a visual flow. Exclude work that needs no visual
 choice, such as replacing wording or changing a value.
 
 Settle the mockup in the session that talks with the user. The coordinator
-presents mockups with a mockup or preview tool available in the environment,
-when one is available. Such a tool renders a mockup for the user and records
-the choice.
+presents mockups with a mockup or preview tool available in the environment.
+Such a tool renders a mockup for the user and records the choice.
 
 - Present two or more mockups with different directions and let the user choose. Do not build only one and merely get it confirmed.
 - Use the mockup tool only with the user's acceptance. When the user declines, or when the tool cannot run, proceed with a text description and record that fact on the target issue.

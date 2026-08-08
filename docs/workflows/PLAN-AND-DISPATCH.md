@@ -159,7 +159,7 @@ Apply the following when a limit is reached.
 5. Choose the first dispatch targets with the parallel decision table.
 6. Assign an isolated workspace and a worker to each work item task and dispatch it. The worker model follows [worker model routing](../integrations/ORCHESTRATOR.md#worker-model-routing).
 7. Move only the issues whose dispatch creation is confirmed to `In Progress`.
-8. Record the execution batch, the issue to work item task mapping, the work item task to dispatch mapping, and the start results as a comment on the execution plan issue.
+8. Record the execution batch, the issue to work item task mapping, the work item task to dispatch mapping, and the start results as a comment on the execution plan issue. In no-orchestrator mode, record the issue to work item task mapping and the start results only.
 
 When `orchestrator.name` is `none`, step 5 selects one work item task at a time
 in dependency order, because execution is serial and the limit is one.

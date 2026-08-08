@@ -87,8 +87,8 @@ Run these steps when `language` is not `en`.
    Separately from that file list, inside a document that is translated, never
    translate a literal command token, a variable key, or a state value. The
    tokens `fast path:`, `standard workflow:`, and
-   `approve execution plan #<number>`, and the `Status` and `Priority` values,
-   stay in English.
+   `approve execution plan #<number>`, and the `Status` and `Priority` field
+   names and their values, stay in English.
 3. Fix every relative link path and anchor in the translated documents so each
    one matches the translated headings.
 4. Fix the relative links and anchors in `docs/env/ENVIRONMENT.example.md`,
