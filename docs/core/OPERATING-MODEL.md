@@ -296,8 +296,9 @@ The user approves in one of two ways. The user leaves a comment on the
 execution plan issue whose text is exactly the phrase defined by
 `github.approval_phrase` in
 [the environment file](../env/ENVIRONMENT.example.md). Alternatively, the user
-instructs the agent in conversation to apply that phrase to execution plan
-`#<number>`. An agent that receives the conversational instruction confirms
+instructs the agent in conversation with exactly
+`approve execution plan #<number>`. Any other wording is not an approval
+instruction. An agent that receives the conversational instruction confirms
 that the number is an execution plan issue in the coordination repository and
 that the plan is currently executable. Only when both checks succeed does the
 agent leave a comment with exactly that phrase and then execute. When a check
@@ -329,6 +330,11 @@ scope by adding work item tasks inside the orchestrator only.
 - A worker reads the target repository instructions first, then applies the skill baseline procedures.
 - A worker sends the completion report only after finishing the required verification.
 - A completion report closes a dispatch. It is not an approval to set the GitHub state to `Done`.
+
+When `orchestrator.name` in
+[the environment file](../env/ENVIRONMENT.example.md) is `none`, a single agent
+performs the execution lifecycle directly, as defined in
+[no-orchestrator mode](../integrations/ORCHESTRATOR.md#no-orchestrator-mode).
 
 ## Execution flow
 
