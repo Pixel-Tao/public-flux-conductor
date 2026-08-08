@@ -50,6 +50,8 @@ When the user does not know a value, skip it and record it as unresolved.
 1. Copy `docs/env/ENVIRONMENT.example.md` to `docs/env/ENVIRONMENT.md` and fill
    in the answers. Record the date each value was verified.
 2. When `language` is not `en`, perform [switching language](#switching-language).
+   When `language` is `en` and `archive/en/` exists, restore the English
+   documents as [reconfiguring](#reconfiguring) describes.
 3. Report the resulting configuration, the unresolved items, and what the user
    needs to decide next.
 
@@ -67,8 +69,12 @@ and a translated key breaks setup.
 Run these steps when `language` is not `en`.
 
 1. When `archive/en/` does not exist, copy `AGENTS.md`, `SETUP.md`, `README.md`,
-   and everything under `docs/` except `docs/env/` into it, preserving relative
-   paths. When it already exists, it is already the reference copy. Leave it
+   and everything under `docs/` except `docs/env/ENVIRONMENT.md` into it,
+   preserving relative paths. The copy includes
+   `docs/env/ENVIRONMENT.example.md`, so every link inside `archive/en/`
+   resolves inside `archive/en/`. `docs/env/ENVIRONMENT.md` records one
+   environment's values and does not belong in a reference copy. When
+   `archive/en/` already exists, it is already the reference copy. Leave it
    untouched.
 2. Translate each document in `archive/en/` into the language set by `language`
    and write the result at its original path. For `README.md`, when `language`
@@ -78,7 +84,7 @@ Run these steps when `language` is not `en`.
    one matches the translated headings.
 4. Fix the relative links and anchors in `docs/env/ENVIRONMENT.example.md` and
    `docs/env/ENVIRONMENT.md` the same way. Both files stay in English. Only
-   their link targets change.
+   their link targets change. Do not touch the copy under `archive/en/`.
 5. Do not modify anything under `archive/en/` after step 1. It is the reference
    copy, and it wins when a translation and its original conflict.
 6. Report any document that could not be translated and why.
@@ -96,4 +102,6 @@ the English reference copy rather than an existing translation.
 
 Changing `language` back to `en` is different. Copy every file from
 `archive/en/` back to its original path, delete `archive/en/`, then fix the
-links in `docs/env/` to match the restored English headings.
+links in `docs/env/ENVIRONMENT.md` to match the restored English headings. The
+restore already returns `docs/env/ENVIRONMENT.example.md` to its English form,
+so it needs no further repair.
