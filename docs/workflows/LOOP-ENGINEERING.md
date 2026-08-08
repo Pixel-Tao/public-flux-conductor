@@ -325,6 +325,7 @@ The following events are grounds for waking a coordinator again.
 - The pre-query command must not exit with code zero when no resume candidate exists. A query command succeeds even on an empty result, so wrap the judgment explicitly.
 - When the host slept through a scheduled interval, run that interval once on wake.
 - Do not replay more than one missed interval.
+- When the next scheduled interval has already arrived on wake, skip the missed interval and run only the next one.
 - The automation definition is a local setting on the executing host. Do not commit it to this repository.
 
 ### Occupancy check

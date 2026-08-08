@@ -49,7 +49,7 @@ The following sections do not apply.
 - Messages between a coordinator and workers
 - Worker reuse, retention, and release
 - Worker selection and model routing in [worker model routing](#worker-model-routing)
-- The orchestrator's ownership of a workspace in [the authority model](#authority-model), in [responsibility and substitution rules](#responsibility-and-substitution-rules), and in [failure and retry](#failure-and-retry)
+- The orchestrator's ownership of a workspace in [the authority model](#authority-model), in [responsibility and substitution rules](#responsibility-and-substitution-rules), in [communication and delegation boundaries](#communication-and-delegation-boundaries), and in [failure and retry](#failure-and-retry)
 - The orchestrator-managed workspace as the place a temporary artifact lives, in [temporary artifacts](#temporary-artifacts)
 
 The following rules still apply, with the coordinator acting as its own worker.
@@ -86,6 +86,45 @@ rules of two areas cannot both be satisfied, or when the applicable area is
 unclear, the worker does not choose on its own initiative and asks the
 coordinator through the orchestrator. When the coordinator cannot resolve it
 within the approved scope either, stop execution and get a user decision.
+
+## Communication and delegation boundaries
+
+The authority model decides what each party may settle. This section decides
+which communication paths exist. It collects the communication and delegation
+rules that the rest of this document states in place.
+
+Whether a path is permitted follows this table. When another section uses a
+path this table does not list, one of the two is wrong, so confirm it and
+correct it. Each row's rule text names the path's principal use. It does not
+narrow an obligation or a prohibition another section states.
+
+| From | To | Rule |
+|---|---|---|
+| User | coordinator | Sends requests, decisions, and approvals directly |
+| coordinator | User | Sends questions, reports, decision requests, and mockups directly |
+| coordinator | The orchestrator | Controls execution batches, work item tasks, dispatches, workspaces, messages, waiting, retries, and worker termination directly |
+| coordinator | worker | Only through the orchestrator |
+| worker | coordinator | Only through the orchestrator. Questions, escalations, and completion reports travel this way |
+| worker | User | Prohibited. Do not settle scope by contacting the approver directly and bypassing the coordinator |
+| worker | A new subordinate agent | Prohibited. The orchestrator alone creates workers and dispatches them |
+| worker | A new workspace | Prohibited. The orchestrator owns the workspace lifecycle, including creating and deleting a worktree |
+| worker | A new work item task | Prohibited. Do not extend the approved scope outside the orchestrator |
+| lightweight worker | Files and external state | Prohibited. The runtime enforces read-only access |
+| lightweight worker | A final completion report | Prohibited. A default worker or the coordinator confirms the result |
+
+Question and escalation paths stay open under every permission setting. When a
+tool or a permission setting closes them, do not use that setting.
+
+When `orchestrator.name` in
+[the environment file](../env/ENVIRONMENT.example.md) is `none`, the worker and
+lightweight worker rows do not apply, because no separate worker exists. The
+coordinator rows that name the orchestrator apply only when one is configured.
+The User and coordinator paths and the rule that question and escalation paths
+stay open apply unchanged. See [no-orchestrator mode](#no-orchestrator-mode).
+
+This table decides communication only. What each party may settle follows
+[the authority model](#authority-model), and the approval a scope change needs
+follows [question and approval boundaries](#question-and-approval-boundaries).
 
 ## Responsibility and substitution rules
 
