@@ -41,7 +41,7 @@ language named by `language` in
 
 - Git tracks only `.gitignore`, `AGENTS.md`, `SETUP.md`, `README.md`, `README.ko.md`, `docs/**/*.md`, and `archive/**/*.md`.
 - The skill baselines may keep local plans and work records under the path `.gitignore` excludes. Do not stage them and do not commit them.
-- `archive/en/` is the reference copy of the English originals. Do not modify it. When a translation and its `archive/en/` original conflict, `archive/en/` is authoritative.
+- `archive/en/` holds the English reference copy. Only the setup procedure creates or removes it. Do not modify its contents, and treat it as authoritative when a translation and its original conflict.
 - Do not commit product code, execution scripts, configuration, GitHub Actions workflows, generated files, or runtime state.
 - Do not create a document, a directory, or a template before the need is confirmed.
 - Do not copy a target repository's instructions. Record only the per-project differences.

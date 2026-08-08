@@ -69,22 +69,25 @@ and a translated key breaks setup.
 Run these steps when `language` is not `en`.
 
 1. When `archive/en/` does not exist, copy `AGENTS.md`, `SETUP.md`, `README.md`,
-   and everything under `docs/` except `docs/env/ENVIRONMENT.md` into it,
-   preserving relative paths. The copy includes
-   `docs/env/ENVIRONMENT.example.md`, so every link inside `archive/en/`
-   resolves inside `archive/en/`. `docs/env/ENVIRONMENT.md` records one
-   environment's values and does not belong in a reference copy. When
-   `archive/en/` already exists, it is already the reference copy. Leave it
-   untouched.
+   `README.ko.md`, and everything under `docs/` except
+   `docs/env/ENVIRONMENT.md` into it, preserving relative paths. The copy
+   includes `docs/env/ENVIRONMENT.example.md` and `README.ko.md`, so every link
+   inside `archive/en/` resolves inside `archive/en/`.
+   `docs/env/ENVIRONMENT.md` records one environment's values and does not
+   belong in a reference copy. When `archive/en/` already exists, it is already
+   the reference copy. Leave it untouched.
 2. Translate each document in `archive/en/` into the language set by `language`
-   and write the result at its original path. For `README.md`, when `language`
-   is `ko`, copy `README.ko.md` over `README.md` instead of translating, because
-   a Korean readme already ships. Leave `README.ko.md` in place either way.
+   and write the result at its original path. Two files are never translated.
+   `docs/env/ENVIRONMENT.example.md` is a variable contract, and a translated
+   key breaks setup. `README.ko.md` already ships in Korean. For `README.md`,
+   when `language` is `ko`, copy `README.ko.md` over `README.md` instead of
+   translating. Leave `README.ko.md` in place either way.
 3. Fix every relative link path and anchor in the translated documents so each
    one matches the translated headings.
 4. Fix the relative links and anchors in `docs/env/ENVIRONMENT.example.md` and
-   `docs/env/ENVIRONMENT.md` the same way. Both files stay in English. Only
-   their link targets change. Do not touch the copy under `archive/en/`.
+   `docs/env/ENVIRONMENT.md` so each one matches the headings step 3 just
+   wrote. Both files stay in English. Only their link targets change. Do not
+   touch the copy under `archive/en/`.
 5. Do not modify anything under `archive/en/` after step 1. It is the reference
    copy, and it wins when a translation and its original conflict.
 6. Report any document that could not be translated and why.
