@@ -27,9 +27,9 @@ When the user does not know a value, skip it and record it as unresolved.
 2. **GitHub account.** Which account or organization owns the work? Which
    repository holds execution plan issues? Which repositories are in scope?
 3. **Central project.** Does a central GitHub Project already exist? If yes,
-   ask for its URL. If no, walk through
+   ask for its URL. If no, guide the user through
    [creating the central project](docs/integrations/TRACKER-GITHUB.md#creating-the-central-project)
-   and then ask for the URL.
+   and let the user perform the creation, then ask for the URL.
 4. **Approval phrase.** Which exact comment text records approval? It must be
    one fixed phrase.
 5. **Agent platforms.** Which agent platforms are in use? For each, which model
@@ -83,6 +83,12 @@ Run these steps when `language` is not `en`.
    legal text whose wording is fixed. For `README.md`, when `language` is `ko`,
    copy `README.ko.md` over `README.md` instead of translating. Leave
    `README.ko.md` in place either way.
+
+   Separately from that file list, inside a document that is translated, never
+   translate a literal command token, a variable key, or a state value. The
+   tokens `fast path:`, `standard workflow:`, and
+   `approve execution plan #<number>`, and the `Status` and `Priority` values,
+   stay in English.
 3. Fix every relative link path and anchor in the translated documents so each
    one matches the translated headings.
 4. Fix the relative links and anchors in `docs/env/ENVIRONMENT.example.md`,

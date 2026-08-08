@@ -321,8 +321,11 @@ approval again.
 | `Backlog` | `Ready` | Ready entry criteria met | User or coordinator |
 | `Ready` | `Planned` | Included in an execution plan | coordinator |
 | `Planned` | `In Progress` | Valid approval and a successful dispatch | coordinator |
+| `Planned` | `Ready` | Execution plan rejected, changed, or cancelled before dispatch | coordinator |
 | `In Progress` | `Review` | Completion report and linked pull request confirmed | coordinator |
+| `In Progress` | `Ready` | Approval voided by an approved scope or completion criteria change | coordinator |
 | `Review` | `Done` | Pull request merged and required verification confirmed | coordinator |
+| `Review` | `In Progress` | An implementation fix inside the approved scope is needed | coordinator |
 | Any non-`Done` state | `Blocked` | Dependency, repeated failure, or a pending user decision | coordinator |
 | `Blocked` | Last valid state | Blocking cause resolved | coordinator |
 | `Blocked` | `Ready` | Blocked by an approved scope or completion criteria change | coordinator |
@@ -352,6 +355,9 @@ is created, keep `Planned`, or cancel the execution plan and return the items to
 - Orchestrator state lost: change no GitHub state, and recover the new execution state from the approved execution plan and the issues
 
 ## Creating the central project
+
+Every step below needs the `project` token scope, which `gh auth login` does not
+grant by default. Run `gh auth refresh -s project` before starting.
 
 Follow these steps when no central project exists yet.
 

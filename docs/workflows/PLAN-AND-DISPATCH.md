@@ -131,7 +131,9 @@ The execution environment must be able to state the following limits.
 - The spare capacity reserved for `P0` work, and the safe waiting criteria for existing work
 
 Actual limit values differ by machine and by the nature of the work, so record
-them in the local environment record rather than fixing them in this repository.
+them in the
+[local environment record](../integrations/ORCHESTRATOR.md#installation-scope)
+rather than fixing them in this repository.
 The coordinator confirms the values in the current execution environment
 immediately before a dispatch.
 
@@ -183,9 +185,9 @@ in [state transitions](../integrations/TRACKER-GITHUB.md#state-transitions).
 Leave the following in the start comment of the execution plan issue.
 
 - A reference to the valid approval comment
-- The execution batch identifier or link
+- The execution batch identifier or link. Not applicable in no-orchestrator mode.
 - The work item task identifier or link for each target issue
-- The identifier or link of each created dispatch
+- The identifier or link of each created dispatch. Not applicable in no-orchestrator mode.
 - The `In Progress`, `Planned`, or `Blocked` start result of each issue
 - The reasons for waiting, failure, and serialization, and the conditions for the next start
 
@@ -209,4 +211,4 @@ Confirm the following before ending the workflow.
 5. Parallel work item tasks are isolated, and the tasks that can conflict are serialized. Not applicable in no-orchestrator mode.
 6. Only the issues whose dispatch succeeded are `In Progress`.
 7. An issue that could not start carries a `Planned` or a `Blocked` reason.
-8. The execution plan issue records the execution batch, work item task, and dispatch mapping, and the start results.
+8. The execution plan issue records the execution batch, work item task, and dispatch mapping, and the start results. In no-orchestrator mode it records the work item task mapping and the start results only.

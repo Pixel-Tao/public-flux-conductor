@@ -220,6 +220,7 @@ development cycle after an execution batch or an agent session ends.
 
 ```text
 .gitignore
+LICENSE
 AGENTS.md
 SETUP.md
 README.md
@@ -239,9 +240,12 @@ docs/
 │  └─ REVIEW-AND-CLOSE.md
 └─ projects/
    └─ <owner>--<repo>.md
+archive/
+└─ en/
 ```
 
 - `.gitignore` excludes only `.superpowers/`, the local artifact path of the skill baselines.
+- `LICENSE` carries the license text of this repository.
 - `AGENTS.md` is the entry point. It carries the repository purpose, the prohibitions, and the document navigation paths only.
 - `SETUP.md` carries the initial setup interview that produces `docs/env/ENVIRONMENT.md`.
 - `README.md` and `README.ko.md` carry the introduction and the getting started steps.
@@ -250,6 +254,7 @@ docs/
 - `integrations` carries the usage rules and the state mapping for each external tool.
 - `workflows` carries the execution procedure of each work stage.
 - `projects` carries only the differences of a project actually onboarded.
+- `archive/en/` carries the English reference copy, and it exists only after a language switch.
 - Add `templates` only when the same form repeats.
 
 Do not create a document or a directory before it is needed.
@@ -260,6 +265,9 @@ The central project uses the following state flow.
 
 ```text
 Backlog -> Ready -> Planned -> In Progress -> Review -> Done
+Planned -> Ready (execution plan rejected, changed, or cancelled)
+In Progress -> Ready (approval voided by a scope or completion criteria change)
+Review -> In Progress (an implementation fix inside the approved scope is needed)
 Any non-Done state -> Blocked -> previous valid state
 Blocked -> Ready (approved scope or completion criteria changed)
 Done -> Ready (issue reopened)

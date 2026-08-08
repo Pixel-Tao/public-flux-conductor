@@ -55,14 +55,21 @@ This README does not repeat them, because they change.
 4. Start your agent in the clone.
 5. Tell it `setup`.
 
+When your agent CLI does not read `AGENTS.md` automatically, point it at that
+file or symlink your CLI's own instruction filename to it.
+
 The agent runs the interview in [SETUP.md](SETUP.md) and writes
 `docs/env/ENVIRONMENT.md`. Choosing a language other than English also performs
 the switch described in the Language section below.
 
+`docs/env/ENVIRONMENT.md` is a tracked file, so committing it in a public fork
+publishes your project URL and your repository scope. Decide for yourself
+whether to commit it.
+
 ## Language
 
 The instruction documents are written in English. The setup interview asks
-which language you want. Choosing another language moves the English originals
+which language you want. Choosing another language copies the English originals
 to `archive/en/` and writes translations at the original paths. The English
 originals stay as the reference copy.
 

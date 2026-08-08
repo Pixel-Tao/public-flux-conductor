@@ -323,7 +323,8 @@ The following events are grounds for waking a coordinator again.
   - The blocking cause of a `Blocked` item is resolved.
 - Do not judge from the mere existence of an open execution plan. Confirm the approval and the target issue state together.
 - The pre-query command must not exit with code zero when no resume candidate exists. A query command succeeds even on an empty result, so wrap the judgment explicitly.
-- Run an interval missed because the host slept once only, inside the grace period.
+- When the host slept through a scheduled interval, run that interval once on wake.
+- Do not replay more than one missed interval.
 - The automation definition is a local setting on the executing host. Do not commit it to this repository.
 
 ### Occupancy check

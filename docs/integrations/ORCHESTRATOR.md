@@ -48,8 +48,11 @@ The following sections do not apply.
 - Worker handoff, handoff verification, and receiver readiness checks
 - Messages between a coordinator and workers
 - Worker reuse, retention, and release
+- Worker selection and model routing in [worker model routing](#worker-model-routing)
+- The orchestrator's ownership of a workspace in [the authority model](#authority-model), in [responsibility and substitution rules](#responsibility-and-substitution-rules), and in [failure and retry](#failure-and-retry)
+- The orchestrator-managed workspace as the place a temporary artifact lives, in [temporary artifacts](#temporary-artifacts)
 
-The following rules still apply without change.
+The following rules still apply, with the coordinator acting as its own worker.
 
 - The approval gate. Do not execute without a valid approval record.
 - Every permanent record obligation in
@@ -338,9 +341,12 @@ in the platform's official instructions at setup time.
 
 Installation and update do not automatically follow the upstream default
 branch. Prefer an official release. When a branch installation is needed,
-record the confirmed ref and source in the local environment record. When the
-upstream changes, confirm discovery and activation again in a new session. Do
-not record a user home path or a plugin trust decision in GitHub.
+record the confirmed ref and source in the local environment record. The local
+environment record is an untracked local file the operator keeps outside this
+repository, because it holds host paths and trust decisions that a public
+repository must not carry. When the upstream changes, confirm discovery and
+activation again in a new session. Do not record a user home path or a plugin
+trust decision in GitHub.
 
 ### Dispatch gate
 
@@ -367,9 +373,9 @@ layout, a component, or a visual flow. Exclude work that needs no visual
 choice, such as replacing wording or changing a value.
 
 Settle the mockup in the session that talks with the user. The coordinator
-presents mockups with the mockup tool named in `skills.baselines` in
-[the environment file](../env/ENVIRONMENT.example.md). That tool renders a
-mockup for the user and records the choice.
+presents mockups with a mockup or preview tool available in the environment,
+when one is available. Such a tool renders a mockup for the user and records
+the choice.
 
 - Present two or more mockups with different directions and let the user choose. Do not build only one and merely get it confirmed.
 - Use the mockup tool only with the user's acceptance. When the user declines, or when the tool cannot run, proceed with a text description and record that fact on the target issue.

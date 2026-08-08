@@ -11,6 +11,10 @@ win.
 An agent never guesses a required value. If a required value is missing, the
 agent stops and returns to the matching interview step.
 
+The instruction documents link to this page because it is the tracked contract
+for these keys. The agent reads the actual values from `ENVIRONMENT.md`, and
+every value shown on this page is an example rather than a real one.
+
 ## Language
 
 | Key | Value | Notes |
@@ -26,6 +30,10 @@ agent stops and returns to the matching interview step.
 | `github.coordination_repo` | `your-account/your-coordination-repo` | Yes. Execution plan issues live here. |
 | `github.managed_scope` | Repositories owned by `your-account` | Yes |
 | `github.approval_phrase` | `approved` | Yes. The exact comment text that records approval. |
+
+Default `github.coordination_repo` to the fork itself, which is
+[the coordination repository](../../AGENTS.md#role). Record a different
+repository only when the execution plan issues live outside the fork.
 
 The approval phrase is compared exactly. Choose one phrase and do not vary it.
 
