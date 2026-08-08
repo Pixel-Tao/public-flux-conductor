@@ -265,7 +265,7 @@ Record an execution plan as one issue in the coordination repository defined by
 following format at the top of the body, regardless of the body length.
 
 ```markdown
-# At a glance
+## At a glance
 
 - Goal: ...
 - Target issues: ...
