@@ -394,7 +394,7 @@ is not a [fast path](../core/OPERATING-MODEL.md#fast-path) candidate.
 7. The coordinator confirms the issue, the pull request, and the verification evidence, then moves the GitHub item to `Review`.
 8. The coordinator moves the GitHub item to `Done` only after confirming the pull request merge and that the completion criteria are met.
 
-## coordinator supervision
+## Coordinator supervision
 
 The coordinator reads the orchestration instructions that match the current
 runtime and version before running an orchestrator command, and uses those
