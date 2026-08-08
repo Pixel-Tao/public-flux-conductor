@@ -1,4 +1,4 @@
-# Agent Coordination Template
+# Flux Conductor
 
 Read this in [한국어](README.ko.md).
 
@@ -84,4 +84,4 @@ repository. Create it when you onboard, not before.
 
 ## License
 
-Choose a license before publishing changes. This template ships without one.
+MIT. See [LICENSE](LICENSE).
