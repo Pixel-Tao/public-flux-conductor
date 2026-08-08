@@ -35,8 +35,8 @@ Install these before use. The templates assume they are present.
 
 The dispatch gate in the orchestrator guide checks that the recommended
 baselines are installed and active. Installing them first is strongly
-recommended. Without them, that gate does not apply and you lose the review and
-verification discipline the workflows assume.
+recommended. Without them, the baseline item of that gate does not apply and you
+lose the review and verification discipline the workflows assume.
 
 **Optional**
 
@@ -56,7 +56,8 @@ This README does not repeat them, because they change.
 5. Tell it `setup`.
 
 The agent runs the interview in [SETUP.md](SETUP.md) and writes
-`docs/env/ENVIRONMENT.md`. Nothing else changes.
+`docs/env/ENVIRONMENT.md`. Choosing a language other than English also performs
+the switch described in the Language section below.
 
 ## Language
 
