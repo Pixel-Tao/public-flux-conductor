@@ -27,7 +27,7 @@ The coordinator confirms the following for each candidate issue.
 
 - The issue is explicitly added to the central project.
 - The issue is currently `Status=Ready`.
-- The issue still meets every criterion in [ready entry criteria](../integrations/TRACKER-GITHUB.md#ready-entry-criteria).
+- The issue still meets every criterion in [ready entry criteria](../integrations/TRACKER-GITHUB.md#ready-entry-criteria), except as refined below.
 - A remaining dependency is resolved, or a preceding issue in the same execution plan satisfies it.
 - The issue is small enough to finish as one independent work item task.
 
