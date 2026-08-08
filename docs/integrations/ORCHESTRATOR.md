@@ -294,20 +294,19 @@ platform. A user decision is required to add or remove a baseline.
 |---|---|---|
 | Superpowers | `obra/superpowers` | Selects and applies the design, planning, implementation, review, and verification workflow |
 | Ponytail | `DietrichGebert/ponytail` | Selects the smallest implementation that meets the requirements in coding work |
-| Karpathy Guidelines | `multica-ai/andrej-karpathy-skills` | Confirms assumptions, simplicity, surgical changes, and verifiable goals |
+| Karpathy Guidelines | `multica-ai/andrej-karpathy-skills` | Reinforces judgment and change discipline, and confirms assumptions, simplicity, surgical changes, and verifiable goals |
 
 The table above is the reference set. `skills.baselines` in
 [the environment file](../env/ENVIRONMENT.example.md) defines the list actually
 in force. When `skills.baselines` is empty, the baseline item of
 [the dispatch gate](#dispatch-gate) does not apply.
 
-Apply the baselines in order. The workflow baseline decides the workflow, the
-guideline baseline reinforces judgment and change discipline, and the minimal
-implementation baseline selects the smallest implementation. The target
-repository instructions, the safety rules, and the user approval take
-precedence. Do not skip a required design, test-driven development, or
-verification step of the workflow baseline in the name of a smaller
-implementation.
+The workflow baseline decides the workflow, the guideline baseline reinforces
+judgment and change discipline, and the minimal implementation baseline selects
+the smallest implementation. The target repository instructions, the safety
+rules, and the user approval take precedence. Do not skip a required design,
+test-driven development, or verification step of the workflow baseline in the
+name of a smaller implementation.
 
 When the same baseline is available through several distribution paths, use the
 path that does not split the version across platforms. Use the upstream above
