@@ -231,7 +231,7 @@ docs/
 │  └─ OPERATING-MODEL.md
 ├─ env/
 │  ├─ ENVIRONMENT.example.md
-│  └─ ENVIRONMENT.md
+│  └─ ENVIRONMENT.md      # untracked
 ├─ integrations/
 │  ├─ ORCHESTRATOR.md
 │  └─ TRACKER-GITHUB.md
@@ -245,14 +245,14 @@ archive/
 └─ en/
 ```
 
-- `.gitignore` excludes only `.superpowers/`, the local artifact path of the skill baselines.
+- `.gitignore` excludes `.superpowers/`, the local artifact path of the skill baselines, and `docs/env/ENVIRONMENT.md`, which records one host's values.
 - `LICENSE` carries the license text of this repository.
 - `AGENTS.md` is the entry point. It carries the repository purpose, the prohibitions, and the document navigation paths only.
 - `CLAUDE.md` imports `AGENTS.md`, so a CLI that reads only `CLAUDE.md` gets the same entry point.
 - `SETUP.md` carries the initial setup interview that produces `docs/env/ENVIRONMENT.md`.
 - `README.md` and `README.ko.md` carry the introduction and the getting started steps.
 - `core` carries the operating principles that apply unchanged to every project.
-- `env` carries the environment values of one installation. `ENVIRONMENT.example.md` is the contract, and `ENVIRONMENT.md` is the filled copy.
+- `env` carries the environment values of one installation. `ENVIRONMENT.example.md` is the contract, and `ENVIRONMENT.md` is the filled copy that Git does not track.
 - `integrations` carries the usage rules and the state mapping for each external tool.
 - `workflows` carries the execution procedure of each work stage.
 - `projects` carries only the differences of a project actually onboarded.

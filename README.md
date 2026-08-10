@@ -62,9 +62,9 @@ The agent runs the interview in [SETUP.md](SETUP.md) and writes
 `docs/env/ENVIRONMENT.md`. Choosing a language other than English also performs
 the switch described in the Language section below.
 
-`docs/env/ENVIRONMENT.md` is a tracked file, so committing it in a public fork
-publishes your project URL and your repository scope. Decide for yourself
-whether to commit it.
+`docs/env/ENVIRONMENT.md` is untracked by default, because committing it in a
+public fork would publish your project URL and your repository scope. Setting up
+a second machine means running `setup` again there rather than pulling the file.
 
 ## Language
 

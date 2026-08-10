@@ -48,7 +48,8 @@ When the user does not know a value, skip it and record it as unresolved.
 ## Output
 
 1. Copy `docs/env/ENVIRONMENT.example.md` to `docs/env/ENVIRONMENT.md` and fill
-   in the answers. Record the date each value was verified.
+   in the answers. Record the date each value was verified. The file is
+   untracked by default, so it stays on this host.
 2. When `language` is not `en`, perform [switching language](#switching-language).
    When `language` is `en` and `archive/en/` exists, restore the English
    documents as [reconfiguring](#reconfiguring) describes.
