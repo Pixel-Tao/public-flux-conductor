@@ -286,6 +286,13 @@ Include the following detail after the summary.
 - Expected risks and how to check them
 - The required verification and the pull request requirement for each issue
 
+An execution plan that contains exactly one issue meeting the
+[fast path](../core/OPERATING-MODEL.md#fast-path) conditions may consist of the
+`At a glance` block alone. One issue carries no execution order, no parallel
+group, and no cross-repository conflict, so the detail items add nothing. Every
+gate applies unchanged, including the approver, the approval phrase, the
+`Planned` state, and the `Done` criteria.
+
 Move the target issues included in an execution plan to `Planned`.
 
 A valid approval record is a comment left on the execution plan issue after the
