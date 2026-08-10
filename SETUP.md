@@ -100,9 +100,15 @@ Run these steps when `language` is not `en`.
    same way, because step 2 produced it by copying rather than translating.
    Each of these files keeps its own language. Only their link targets change.
    Do not touch the copies under `archive/en/`.
-5. Do not modify anything under `archive/en/` after step 1. It is the reference
+5. Verify the result before reporting. Confirm that every relative link in every
+   changed file resolves to a file that exists, and that every anchor matches a
+   heading actually present in the target file. Confirm that `fast path:`,
+   `standard workflow:`, `approve execution plan #<number>`, and the `Status` and
+   `Priority` field names and values are still in English. List every file that
+   failed a check. Do not report the switch as complete while a check fails.
+6. Do not modify anything under `archive/en/` after step 1. It is the reference
    copy, and it wins when a translation and its original conflict.
-6. Report any document that could not be translated and why.
+7. Report any document that could not be translated and why.
 
 When `language` is `en`, do not create `archive/en/`.
 
