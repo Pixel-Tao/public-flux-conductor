@@ -9,7 +9,7 @@ execution automation.
 ## Start sequence
 
 1. Check whether `docs/env/ENVIRONMENT.md` exists. When it is absent, read [SETUP.md](SETUP.md#when-to-run) and propose the initial setup before handling any other request.
-2. Read [the operating model](docs/core/OPERATING-MODEL.md) before any other work.
+2. Read [the invariants](docs/core/INVARIANTS.md) before any other work. Read [the operating model](docs/core/OPERATING-MODEL.md) before writing an execution plan, before a routing decision, and whenever an invariant needs its full definition.
 3. Read only the existing `docs/integrations/`, `docs/workflows/`, and `docs/projects/` documents that relate to the request.
 4. Read a target repository's `AGENTS.md` and its existing development rules before changing that repository.
 

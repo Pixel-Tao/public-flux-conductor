@@ -78,6 +78,7 @@ Actions도 들어 있지 않습니다. 여기 있는 어떤 것도 스스로 실
 |---|---|
 | [AGENTS.md](AGENTS.md) | 진입점. 설정 확인과 문서 라우팅 |
 | [SETUP.md](SETUP.md) | 초기 설정 인터뷰와 언어 전환 |
+| [docs/core/INVARIANTS.md](docs/core/INVARIANTS.md) | 모든 모드에서 항상 지켜야 하는 규칙 한 페이지 |
 | [docs/core/OPERATING-MODEL.md](docs/core/OPERATING-MODEL.md) | 모든 환경에 공통으로 적용되는 운영 원칙 |
 | [docs/integrations/TRACKER-GITHUB.md](docs/integrations/TRACKER-GITHUB.md) | GitHub 이슈와 프로젝트 규칙 |
 | [docs/integrations/ORCHESTRATOR.md](docs/integrations/ORCHESTRATOR.md) | 실행 수명 주기 책임과 오케스트레이터 없는 모드 |

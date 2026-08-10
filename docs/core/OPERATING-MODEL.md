@@ -228,6 +228,7 @@ README.md
 README.ko.md
 docs/
 ├─ core/
+│  ├─ INVARIANTS.md
 │  └─ OPERATING-MODEL.md
 ├─ env/
 │  ├─ ENVIRONMENT.example.md
@@ -251,7 +252,7 @@ archive/
 - `CLAUDE.md` imports `AGENTS.md`, so a CLI that reads only `CLAUDE.md` gets the same entry point.
 - `SETUP.md` carries the initial setup interview that produces `docs/env/ENVIRONMENT.md`.
 - `README.md` and `README.ko.md` carry the introduction and the getting started steps.
-- `core` carries the operating principles that apply unchanged to every project.
+- `core` carries the operating principles that apply unchanged to every project. `INVARIANTS.md` is the one-page card of the rules that hold in every mode.
 - `env` carries the environment values of one installation. `ENVIRONMENT.example.md` is the contract, and `ENVIRONMENT.md` is the filled copy that Git does not track.
 - `integrations` carries the usage rules and the state mapping for each external tool.
 - `workflows` carries the execution procedure of each work stage.

@@ -79,6 +79,7 @@ originals stay as the reference copy.
 |---|---|
 | [AGENTS.md](AGENTS.md) | Entry point. Setup check and document routing |
 | [SETUP.md](SETUP.md) | Initial setup interview and language switching |
+| [docs/core/INVARIANTS.md](docs/core/INVARIANTS.md) | The rules that hold in every mode, on one page |
 | [docs/core/OPERATING-MODEL.md](docs/core/OPERATING-MODEL.md) | Operating principles that apply to every environment |
 | [docs/integrations/TRACKER-GITHUB.md](docs/integrations/TRACKER-GITHUB.md) | GitHub issue and project rules |
 | [docs/integrations/ORCHESTRATOR.md](docs/integrations/ORCHESTRATOR.md) | Execution lifecycle responsibilities and no-orchestrator mode |
