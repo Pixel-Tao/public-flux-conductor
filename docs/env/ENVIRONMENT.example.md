@@ -30,12 +30,17 @@ every value shown on this page is an example rather than a real one.
 | `github.coordination_repo` | `your-account/your-coordination-repo` | Yes. Execution plan issues live here. |
 | `github.managed_scope` | Repositories owned by `your-account` | Yes |
 | `github.approval_phrase` | `approved` | Yes. The exact comment text that records approval. |
+| `github.approvers` | `your-account` | Yes. Only a comment by one of these logins is a valid approval. |
 
 Default `github.coordination_repo` to the fork itself, which is
 [the coordination repository](../../AGENTS.md#role). Record a different
 repository only when the execution plan issues live outside the fork.
 
 The approval phrase is compared exactly. Choose one phrase and do not vary it.
+
+An approval comment by a login outside `github.approvers` is not an approval
+record, whatever its text. A public fork lets anyone comment on an execution plan
+issue, so this list is the boundary rather than the phrase.
 
 ## Orchestrator
 

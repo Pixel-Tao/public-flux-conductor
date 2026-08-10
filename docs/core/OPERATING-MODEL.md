@@ -38,11 +38,15 @@ record. The [fast path](#fast-path) is not managed in the central project. When
 the fast path produces a commit or a pull request, that Git record is the
 permanent evidence.
 
-The current operating model assumes a single operator. The person who leaves
-the phrase defined by `github.approval_phrase` in
-[the environment file](../env/ENVIRONMENT.example.md) is the only approver. Add
-multiple approvers and role-based permissions as a separate policy when real
-collaborators appear.
+The current operating model assumes a single operator. The logins listed in
+`github.approvers` in [the environment file](../env/ENVIRONMENT.example.md) are
+the only approvers, and a comment by any other login is not an approval record.
+Add role-based permissions as a separate policy when real collaborators appear.
+
+The approval gate is an audit record rather than a security boundary. The agent
+itself writes the approval comment on the `approve execution plan #<number>`
+shortcut, so the gate holds only as far as the agent follows it. Read the record
+as evidence of intent, not as proof that a separate party approved.
 
 ## Instruction boundaries
 
@@ -303,7 +307,7 @@ defined in
 The full procedure from writing a plan to dispatching it is
 [plan and dispatch](../workflows/PLAN-AND-DISPATCH.md).
 
-The user approves in one of two ways. The user leaves a comment on the
+The user approves in one of two ways. An approver leaves a comment on the
 execution plan issue whose text is exactly the phrase defined by
 `github.approval_phrase` in
 [the environment file](../env/ENVIRONMENT.example.md). Alternatively, the user

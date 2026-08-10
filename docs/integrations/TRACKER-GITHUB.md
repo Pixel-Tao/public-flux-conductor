@@ -289,12 +289,12 @@ Include the following detail after the summary.
 Move the target issues included in an execution plan to `Planned`.
 
 A valid approval record is a comment left on the execution plan issue after the
-last edit of its body, whose text is exactly the phrase defined by
-`github.approval_phrase` in
+last edit of its body, whose author login is listed in `github.approvers` and
+whose text is exactly the phrase defined by `github.approval_phrase`, both in
 [the environment file](../env/ENVIRONMENT.example.md). The user leaves this
 comment on GitHub directly, or instructs the agent with exactly
 `approve execution plan #<number>`. Any other wording is not an approval
-instruction.
+instruction, and a comment by any other login is not an approval record.
 
 An agent that receives the conversational instruction confirms the following
 conditions.

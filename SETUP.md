@@ -30,8 +30,9 @@ When the user does not know a value, skip it and record it as unresolved.
    ask for its URL. If no, guide the user through
    [creating the central project](docs/integrations/TRACKER-GITHUB.md#creating-the-central-project)
    and let the user perform the creation, then ask for the URL.
-4. **Approval phrase.** Which exact comment text records approval? It must be
-   one fixed phrase.
+4. **Approval phrase and approvers.** Which exact comment text records approval?
+   It must be one fixed phrase. Which GitHub logins may leave it? Only a comment
+   by one of those logins is a valid approval record.
 5. **Agent platforms.** Which agent platforms are in use? For each, which model
    and effort serve as the default tier, the lightweight read-only tier, and
    the escalation order?
