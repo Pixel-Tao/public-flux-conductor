@@ -330,6 +330,12 @@ The following events are grounds for waking a coordinator again.
 
 ### Occupancy check
 
+An occupancy comment is an audit record, not an atomic lock. Two coordinators can
+read the same empty state and then both write a comment. Run no more coordinators
+than `automation.max_coordinators` in
+[the environment file](../env/ENVIRONMENT.example.md) allows, and keep that number
+at one while GitHub comments are the only occupancy record.
+
 - A woken coordinator checks the execution plan issue for occupancy by another agent before executing.
 - The coordinator records the occupancy in a comment on the execution plan issue when it decides to continue.
 - GitHub is the single reference for the occupancy record. Use orchestrator state as cross-check evidence only.

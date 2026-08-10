@@ -44,7 +44,8 @@ When the user does not know a value, skip it and record it as unresolved.
    [role vocabulary](docs/integrations/ORCHESTRATOR.md#role-vocabulary). If no,
    record `none`.
 8. **Scheduled wake.** Has the user approved scheduled wake? If yes, ask for
-   the mechanism and the interval. If no, record `automation.approved` as `no`.
+   the mechanism, the interval, and how many coordinators may run at once. If no,
+   record `automation.approved` as `no`.
 
 ## Output
 

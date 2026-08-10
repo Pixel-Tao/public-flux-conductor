@@ -69,8 +69,9 @@ same evidence listed in [completion reports](#completion-reports).
 When a task needs isolation, use a git worktree directly and say so in the
 answer. Remove it after the work is merged or abandoned.
 
-Duplicate-execution checks rely only on the occupancy record in GitHub,
-because no orchestrator state exists to compare against.
+Duplicate-execution checks rely only on the occupancy record in GitHub, because
+no orchestrator state exists to compare against. That record is advisory rather
+than a lock, so run one coordinator at a time.
 
 ## Authority model
 

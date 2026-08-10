@@ -104,6 +104,7 @@ satisfied gate.
 | `automation.approved` | `no` | Yes |
 | `automation.mechanism` | Not applicable while `automation.approved` is `no` | Yes when approved |
 | `automation.interval` | `10 minutes` | No. Defaults to 10 minutes. |
+| `automation.max_coordinators` | `1` | No. Defaults to 1. Keep it at 1 while the occupancy record is a GitHub comment. |
 
 Scheduled wake only wakes a coordinator. It grants no execution authority. See
 [continuous execution triggers](../workflows/LOOP-ENGINEERING.md#continuous-execution-triggers).
