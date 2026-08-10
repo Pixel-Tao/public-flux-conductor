@@ -91,8 +91,8 @@ new issue, and do not expand the current pull request scope.
 ## Merge and Done gate
 
 The coordinator may merge a pull request inside the approved execution plan
-scope without a separate merge approval. Confirm all of the following before the
-merge.
+scope without a separate merge approval, except in the high-risk case below.
+Confirm all of the following before the merge.
 
 - The completion criteria of the issue are met.
 - The linked pull request targets the correct target repository and the merge target branch that the repository rules define.
@@ -101,6 +101,13 @@ merge.
 - The evidence of the required tests, lints, builds, or manual verifications is confirmed.
 - The change does not leave the approved scope.
 - The remaining risks and the follow-up work are recorded.
+
+Get a separate user confirmation before merging when the change falls into one of
+the high-risk categories in
+[review and independent review](#review-and-independent-review). The execution
+plan approval covers the work rather than the merge for those categories, and the
+same agent performs the independent review when `orchestrator.name` is `none`.
+Record the confirmation on the pull request.
 
 Recognize an exception to a required check or verification only when the user
 explicitly approved the exception target, the reason, and the impact on the
@@ -223,7 +230,7 @@ Confirm the following before ending the workflow.
 2. Every entry gate was met before `Review`.
 3. The independent review that the target repository rules or a high-risk category required is complete.
 4. Waiting, an implementation fix, and a scope change are reflected in the states of the decision table.
-5. The completion criteria, the reviews, the checks, the verification, the scope, and the risks were confirmed before the merge.
+5. The completion criteria, the reviews, the checks, the verification, the scope, and the risks were confirmed before the merge, together with the separate user confirmation a high-risk change requires.
 6. A verification exception, if any, carries the evidence of an explicit user approval.
 7. The item moved to `Done` only after the actual merge of the pull request was confirmed again.
 8. The pull request, merge, verification, review, and risk evidence is recorded on the target issue.
