@@ -88,13 +88,14 @@ filter when needed.
 
 ## Automation
 
-The only permitted automation sets the default `Status` of a new item.
+The only permitted built-in automation sets the default `Status` of a new item.
 
 - When an item is added to the project, set `Status=Backlog`.
 
-Do not set an automatic default for `Priority`. A GitHub Projects single select
-field supports no default value, so set `Priority=P2` on a new item during the
-issue registration procedure instead.
+`Priority` carries a field default rather than a built-in automation. Set `P2` as
+the default value of the `Priority` single select field. Set `Priority=P2` during
+the issue registration procedure only when an existing project cannot carry that
+default.
 
 Do not use the following automations.
 
@@ -363,7 +364,7 @@ Follow these steps when no central project exists yet.
 
 1. Create the project under the account named in `github.owner`.
 2. Register the `Status` single select field with the seven options listed in the field contract.
-3. Register the `Priority` single select field with its four options, in `P0` to `P3` order.
+3. Register the `Priority` single select field with its four options, in `P0` to `P3` order, then set `P2` as its default value.
 4. Create the Queue view with the layout, the filter, and the sort that the default views section defines.
 5. Create the Execution view with the layout, the filter, the group, and the sort that the default views section defines.
 6. Enable the built-in automation that sets `Status=Backlog` on a newly added item.
@@ -375,7 +376,7 @@ Record the resulting project URL as `github.project_url` in
 
 Confirm the following after the project is configured.
 
-1. Adding a trial issue sets `Status=Backlog` and leaves `Priority` empty.
+1. Adding a trial issue sets `Status=Backlog` and `Priority=P2`.
 2. An issue that was not added to the project does not appear.
 3. An issue close alone does not produce `Done`.
 4. A linked pull request merge alone does not produce `Done`.
