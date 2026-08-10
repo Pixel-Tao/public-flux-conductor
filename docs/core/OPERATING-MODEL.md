@@ -222,6 +222,7 @@ development cycle after an execution batch or an agent session ends.
 .gitignore
 LICENSE
 AGENTS.md
+CLAUDE.md
 SETUP.md
 README.md
 README.ko.md
@@ -247,6 +248,7 @@ archive/
 - `.gitignore` excludes only `.superpowers/`, the local artifact path of the skill baselines.
 - `LICENSE` carries the license text of this repository.
 - `AGENTS.md` is the entry point. It carries the repository purpose, the prohibitions, and the document navigation paths only.
+- `CLAUDE.md` imports `AGENTS.md`, so a CLI that reads only `CLAUDE.md` gets the same entry point.
 - `SETUP.md` carries the initial setup interview that produces `docs/env/ENVIRONMENT.md`.
 - `README.md` and `README.ko.md` carry the introduction and the getting started steps.
 - `core` carries the operating principles that apply unchanged to every project.

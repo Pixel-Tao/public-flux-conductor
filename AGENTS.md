@@ -39,7 +39,7 @@ language named by `language` in
 
 ## Repository boundaries
 
-- Git tracks only `.gitignore`, `LICENSE`, `AGENTS.md`, `SETUP.md`, `README.md`, `README.ko.md`, `docs/**/*.md`, and `archive/**`.
+- Git tracks only `.gitignore`, `LICENSE`, `AGENTS.md`, `CLAUDE.md`, `SETUP.md`, `README.md`, `README.ko.md`, `docs/**/*.md`, and `archive/**`.
 - The skill baselines may keep local plans and work records under the path `.gitignore` excludes. Do not stage them and do not commit them.
 - `archive/en/` holds the English reference copy. Only the setup procedure creates or removes it. Do not modify its contents, and treat it as authoritative when a translation and its original conflict.
 - Do not commit product code, execution scripts, configuration, GitHub Actions workflows, generated files, or runtime state.
