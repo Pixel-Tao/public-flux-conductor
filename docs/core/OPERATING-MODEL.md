@@ -20,6 +20,13 @@ The following items are out of scope for this repository.
 - Implementations of a scheduler, a bot, a webhook, or a GitHub Actions workflow
 - Copies of a target repository's own instructions
 - Automatic dispatch that the user has not approved
+- Real-time incident response and runtime-only state changes that leave no Git artifact
+
+The central project tracks planned development changes. A change that produces no
+commit and no pull request, such as a service restart, a rollback of a running
+deployment, or an operational flag flip, is not a managed item. Record in an issue
+the decision that such an action produced when it changes scope, priority, or
+completion criteria, and run the action itself outside this workflow.
 
 ## Source of truth and responsibility
 

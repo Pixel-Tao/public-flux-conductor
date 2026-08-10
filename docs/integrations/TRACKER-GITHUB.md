@@ -57,7 +57,7 @@ Done
 
 | Value | Meaning |
 |---|---|
-| `P0` | An outage, a security issue, or a data risk that needs an immediate response |
+| `P0` | A code-level fix for an outage, a security issue, or a data risk that needs an immediate response |
 | `P1` | Work to handle first in the next execution batch |
 | `P2` | Ordinary work, and the default for a new item |
 | `P3` | Work that is explicitly deferred |
