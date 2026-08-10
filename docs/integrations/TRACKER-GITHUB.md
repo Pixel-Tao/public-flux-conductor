@@ -312,7 +312,9 @@ the same approval comment.
 
 When the body, the target issues, the scope, or the completion criteria change
 after approval, void the approval, return the related items to `Ready`, and get
-approval again.
+approval again. A target issue updated after the approval comment counts as
+changed until the update is confirmed to leave the scope and the completion
+criteria untouched.
 
 ## State transitions
 

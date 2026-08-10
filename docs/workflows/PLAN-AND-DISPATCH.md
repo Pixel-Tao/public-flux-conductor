@@ -80,11 +80,17 @@ and, only when the verification succeeds, leaves a comment with exactly that
 phrase on that issue and continues this workflow. When the verification fails,
 the agent performs neither the comment nor the dispatch, and reports the reason.
 
-A valid approval record is a comment whose text is exactly that phrase and which
-was left after the last edit of the execution plan body. Immediately before
-creating the execution batch, confirm again the approval route, the exact
-comment text, the time of the last body edit, the included issues, the `Planned`
-state, and the absence of a new blocker.
+A valid approval record is a comment by an approver whose text is exactly that
+phrase and which was left after the last edit of the execution plan body.
+Immediately before creating the execution batch, confirm again the approval
+route, the comment author, the exact comment text, the time of the last body
+edit, the included issues, the `Planned` state, and the absence of a new blocker.
+
+Compare the last update time of each included target issue with the time of the
+approval comment. A target issue updated after the approval comment is treated as
+changed, and the approval is void until the change is confirmed to leave the
+scope and the completion criteria untouched. Get approval again when either
+moved.
 
 An approval is void when the execution plan is rejected, or when its body, its
 included issues, its scope, or its completion criteria change. Return the
