@@ -73,7 +73,7 @@ Issue bodies, pull request descriptions, and comment formats follow
 
 - Write answers in the language named by `language` in [the environment file](../env/ENVIRONMENT.example.md).
 - Use the polite form when that language distinguishes politeness levels. The instruction documents in this repository stay in the plain declarative form.
-- Put the result, the conclusion, and the next actions together at the end of the answer. Keep process, evidence, and detail above them.
+- Open the answer with the result, the conclusion, and the next actions. Put the process, the evidence, and the detail below them.
 - Keep one sentence within two lines. Put one thing in one sentence.
 - Write three or more listed items as a list. Write a comparison of several items on the same attribute as a table.
 - Expand each term and abbreviation once, the first time it appears in an answer. Example: `dispatch` (handing one execution to a worker).
@@ -86,16 +86,16 @@ a file, running a command, changing an issue or a pull request, and dispatching
 all count as performing something. Write `none` for an item that does not
 apply.
 
-Write the following in the body.
+Write the following at the top of the answer.
+
+- The result. State it as one of `complete`, `partially complete`, or `stopped`.
+- The next action, or the decision needed from the user
+
+Write the following in the body below them.
 
 - What was done and what changed. Include file paths, issue numbers, and pull request numbers.
 - Problems, constraints, and assumptions made
 - Verification performed and its result. For verification that could not run, write the reason and the impact.
-
-Write the following at the end of the answer.
-
-- The result. State it as one of `complete`, `partially complete`, or `stopped`.
-- The next action, or the decision needed from the user
 
 ## Fast path
 
@@ -177,15 +177,17 @@ the actual state. Do not conclude from a search result title alone.
 
 Present the answer in the following order.
 
-1. The reasoning and the detail the answer needs
-2. Source links and the time each was checked
-3. Facts, estimates, conflicting evidence, and parts left unconfirmed
-4. The conclusion and the summary for the question, at the end
+1. The conclusion and the summary for the question
+2. The reasoning and the detail the answer needs
+3. Source links and the time each was checked
+4. Facts, estimates, conflicting evidence, and parts left unconfirmed
 
-This order is not forced on a simple single fact. Always place the conclusion
-and the summary last in an answer that carries a detailed comparison, decision
-support, multi-source research, or authenticated information. Sentence length,
-list and table use, and term expansion follow [answer format](#answer-format).
+This order is not forced on a simple single fact. Always open with the conclusion
+in an answer that carries a detailed comparison, decision support, multi-source
+research, or authenticated information. Repeat a short summary at the end only
+when the answer runs long enough that the opening has scrolled away. Sentence
+length, list and table use, and term expansion follow
+[answer format](#answer-format).
 
 When research finds that a file change or an external state change is needed,
 do not perform it before a separate request. Only after a separate request does
