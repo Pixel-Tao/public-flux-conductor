@@ -80,6 +80,10 @@ and, only when the verification succeeds, leaves a comment with exactly that
 phrase on that issue and continues this workflow. When the verification fails,
 the agent performs neither the comment nor the dispatch, and reports the reason.
 
+Before approving, the user may request an understanding briefing or check of
+the execution plan, as defined in
+[understanding support](../core/OPERATING-MODEL.md#understanding-support).
+
 A valid approval record is a comment by an approver whose text is exactly that
 phrase and which was left after the last edit of the execution plan body.
 Immediately before creating the execution batch, confirm again the approval
