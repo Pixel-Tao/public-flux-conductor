@@ -108,7 +108,9 @@ the high-risk categories in
 [review and independent review](#review-and-independent-review). The execution
 plan approval covers the work rather than the merge for those categories, and the
 same agent performs the independent review when `orchestrator.name` is `none`.
-Record the confirmation on the pull request.
+Record the confirmation on the pull request. This confirmation may run as an
+understanding briefing or check, as defined in
+[understanding support](../core/OPERATING-MODEL.md#understanding-support).
 
 Recognize an exception to a required check or verification only when the user
 explicitly approved the exception target, the reason, and the impact on the

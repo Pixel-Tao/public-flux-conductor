@@ -390,6 +390,27 @@ record.
 - Write no separate record for a change whose reason the diff and the existing documents already show.
 - Leave understanding that cannot be repaid inside the approved scope as a follow-up issue candidate. Do not expand the approved scope to repay it.
 
+### Understanding support
+
+On a user request, or before the separate user confirmation that a high-risk
+merge requires, the coordinator may present the change as an understanding
+briefing: the content of the permanent record, restated in plain language with
+visual aids such as diagrams and flowcharts. Build the briefing from the
+permanent record only. When the briefing cannot be built from that record, the
+record is insufficient, so repair the record first.
+
+The support takes one of two forms, and the user chooses the form.
+
+- `briefing`: the explanation and the visuals alone. The user reads them and then confirms through the existing gates.
+- `check`: the explanation followed by one question per step. The completion screen reveals a confirmation phrase, and the user returns that phrase to the coordinator. The coordinator records the passed check on the target issue or the pull request, then proceeds through the existing gates.
+
+The following rules apply to both forms.
+
+- Present the explanation before any question. Do not present questions alone.
+- The user may switch a `check` to a `briefing` at any time.
+- Neither form replaces the approval record, the merge confirmation record, or any other existing gate.
+- The generated page or file follows [temporary artifacts](../integrations/ORCHESTRATOR.md#temporary-artifacts) and is not committed.
+
 ## Decision and message records
 
 - Record transient progress, heartbeats, and worker questions in the orchestrator.
