@@ -527,8 +527,11 @@ When no separate policy exists, keep a temporary artifact only in the workspace
 the orchestrator manages, and make it untracked with the repository's local
 exclude feature. Do not change the target repository's tracked `.gitignore` to
 hide a temporary artifact, and do not include such a file in a pull request.
-Move only the scope, completion criteria, priority, and retry decisions that
-future execution needs into GitHub.
+Before the workspace is cleaned up, move the scope, completion criteria,
+priority, and retry decisions that future execution needs into GitHub, and the
+design decisions and constraints that future maintenance needs into the pull
+request or the target repository documents, as defined in
+[recoverable understanding](../core/OPERATING-MODEL.md#recoverable-understanding).
 
 ## Failure and retry
 
@@ -550,6 +553,7 @@ A worker includes the following evidence in the completion report.
 - The test, lint, and build commands that were run, and their results
 - The verification that could not run, and its impact
 - The remaining risks, the follow-up work, and the unresolved questions
+- The non-obvious decisions made during implementation, and where each is recorded
 
 The coordinator compares the reported content with the actual GitHub state. A
 completion report is evidence for ending a dispatch and entering `Review` only.

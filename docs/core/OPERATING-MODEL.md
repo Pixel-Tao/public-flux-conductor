@@ -108,6 +108,7 @@ The agent confirms all of the following conditions.
 
 - One agent can produce one clear outcome in one repository.
 - Scope, completion criteria, and verification method carry no meaningful ambiguity.
+- The reason for the change is evident from the diff and the existing documents.
 - The central project does not already track an issue for this work.
 - The change is small and easy to revert.
 - The change affects none of security, permissions, secrets, personal data, data loss, schema, migration, deployment, infrastructure, dependencies, or public API compatibility.
@@ -375,10 +376,25 @@ Steps 1 to 5 are detailed in
 [plan and dispatch](../workflows/PLAN-AND-DISPATCH.md). Steps 7 and 8 are
 detailed in [review and close](../workflows/REVIEW-AND-CLOSE.md).
 
+## Recoverable understanding
+
+A later coordinator must be able to reconstruct a change from the permanent
+record alone: what changed, why it was done this way, which alternative was
+rejected when one was, and what must stay true afterwards. A conversation, an
+orchestrator message, and an untracked note are not part of the permanent
+record.
+
+- Record a design decision settled with the user before dispatch on the target issue, with its reason.
+- Record a non-obvious decision made during implementation in the pull request.
+- Record long-lived architecture and domain knowledge in the target repository documents.
+- Write no separate record for a change whose reason the diff and the existing documents already show.
+- Leave understanding that cannot be repaid inside the approved scope as a follow-up issue candidate. Do not expand the approved scope to repay it.
+
 ## Decision and message records
 
 - Record transient progress, heartbeats, and worker questions in the orchestrator.
 - Record every decision that changes scope, priority, completion criteria, or retry strategy in GitHub as well.
+- Record a design decision settled with the user before dispatch, as defined in [recoverable understanding](#recoverable-understanding).
 - When a worker question requires a scope change, the coordinator gets a user decision and updates GitHub first.
 - When work outside the execution plan is discovered, do not expand the plan on your own initiative. Leave it as a new issue or a candidate for the next execution plan.
 
@@ -407,6 +423,7 @@ GitHub item to `Done`.
 - The required checks pass, or an explicitly approved exception covers them.
 - The pull request is merged.
 - Remaining risks and follow-up work are recorded.
+- The reason for a non-obvious change is recoverable from the pull request, the target issue, or the target repository documents, as defined in [recoverable understanding](#recoverable-understanding).
 
 The completion summary includes the execution plan issue, the target issue, the
 pull request, the verification results, and the remaining risks.

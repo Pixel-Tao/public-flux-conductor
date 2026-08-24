@@ -349,7 +349,7 @@ at one while GitHub comments are the only occupancy record.
 4. The product and technical criteria that affect scope were settled with the user before the first execution plan.
 5. A duplicate search ran and the approved scope was confirmed before the roadmap management issue and each follow-up issue were created.
 6. Every execution plan was approved separately and passed the existing dispatch gates.
-7. The completed results and the remaining risks are reflected in the product and technical documents, the roadmap, and the management issue.
+7. The completed results, the remaining risks, and the non-obvious decisions are reflected in the product and technical documents, the roadmap, and the management issue.
 8. No work outside the scope was added to an issue or to a dispatch scope before a user decision.
 9. The next development cycle, a wait, or an ending was decided from the overall completion criteria after each execution plan closed.
 10. The closing evidence and the last state were recorded and the roadmap management issue was closed at the end.

@@ -101,6 +101,7 @@ Confirm all of the following before the merge.
 - The evidence of the required tests, lints, builds, or manual verifications is confirmed.
 - The change does not leave the approved scope.
 - The remaining risks and the follow-up work are recorded.
+- The reason for a non-obvious change is recoverable from the permanent record, as defined in [recoverable understanding](../core/OPERATING-MODEL.md#recoverable-understanding).
 
 Get a separate user confirmation before merging when the change falls into one of
 the high-risk categories in

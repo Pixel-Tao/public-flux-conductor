@@ -19,3 +19,4 @@ line links to the document that defines it in full.
 13. Question and escalation paths stay open under every permission setting. [Definition](../integrations/ORCHESTRATOR.md#platform-enforcement)
 14. Do not commit product code, execution automation, or runtime state to this repository. [Definition](../../AGENTS.md#repository-boundaries)
 15. When two rules conflict or the applicable scope is unclear, stop and ask. Do not choose on your own initiative. [Definition](../integrations/ORCHESTRATOR.md#authority-model)
+16. Do not move a work item to `Done` while the reason for a non-obvious change exists only in a conversation, an orchestrator message, or an untracked note. [Definition](OPERATING-MODEL.md#recoverable-understanding)
