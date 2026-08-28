@@ -328,7 +328,10 @@ The following events are grounds for waking a coordinator again.
 - When the next scheduled interval has already arrived on wake, skip the missed interval and run only the next one.
 - The automation definition is a local setting on the executing host. Do not commit it to this repository.
 
-### Occupancy check
+## Occupancy check
+
+This check applies in every execution mode, whether or not a scheduled wake is
+approved.
 
 An occupancy comment is an audit record, not an atomic lock. Two coordinators can
 read the same empty state and then both write a comment. Run no more coordinators
@@ -336,7 +339,7 @@ than `automation.max_coordinators` in
 [the environment file](../env/ENVIRONMENT.example.md) allows, and keep that number
 at one while GitHub comments are the only occupancy record.
 
-- A woken coordinator checks the execution plan issue for occupancy by another agent before executing.
+- A starting or woken coordinator checks the execution plan issue for occupancy by another agent before executing.
 - The coordinator records the occupancy in a comment on the execution plan issue when it decides to continue.
 - GitHub is the single reference for the occupancy record. Use orchestrator state as cross-check evidence only.
 - An agent session started outside the orchestrator does not appear in orchestrator state. Do not treat empty orchestrator state as evidence that no occupancy exists.

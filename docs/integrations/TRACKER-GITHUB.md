@@ -287,8 +287,9 @@ Include the following detail after the summary.
 - The required verification and the pull request requirement for each issue
 
 An execution plan that contains exactly one issue meeting the
-[fast path](../core/OPERATING-MODEL.md#fast-path) conditions may consist of the
-`At a glance` block alone. One issue carries no execution order, no parallel
+[fast path](../core/OPERATING-MODEL.md#fast-path) conditions, excluding the
+condition that the central project does not already track the work, may consist
+of the `At a glance` block alone. One issue carries no execution order, no parallel
 group, and no cross-repository conflict, so the detail items add nothing. Every
 gate applies unchanged, including the approver, the approval phrase, the
 `Planned` state, and the `Done` criteria.

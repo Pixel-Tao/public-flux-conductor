@@ -61,7 +61,7 @@ The coordinator reviews in the following order.
 1. Compare the commit, the branch, the pull request, and the verification results of the completion report with the actual values in GitHub.
 2. Confirm that the pull request changes correspond to the approved scope and to the issue completion criteria.
 3. Apply the `AGENTS.md`, branch, review, and check rules of the target repository.
-4. Confirm correctness, regression risk, and verification evidence with the review method of the workflow baseline.
+4. Confirm correctness, regression risk, and verification evidence with the review method the worker's harness provides.
 5. Judge whether an independent review is needed, and record the result on the pull request or on the issue.
 
 Use an independent review worker whenever the target repository requires one, or

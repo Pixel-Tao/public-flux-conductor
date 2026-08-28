@@ -388,6 +388,7 @@ record.
 - Record a non-obvious decision made during implementation in the pull request.
 - Record long-lived architecture and domain knowledge in the target repository documents.
 - Write no separate record for a change whose reason the diff and the existing documents already show.
+- Treat a change whose obviousness could be judged either way as non-obvious.
 - Leave understanding that cannot be repaid inside the approved scope as a follow-up issue candidate. Do not expand the approved scope to repay it.
 
 ### Understanding support
@@ -402,12 +403,14 @@ record is insufficient, so repair the record first.
 The support takes one of two forms, and the user chooses the form.
 
 - `briefing`: the explanation and the visuals alone. The user reads them and then confirms through the existing gates.
-- `check`: the explanation followed by one question per step. The completion screen reveals a confirmation phrase, and the user returns that phrase to the coordinator. The coordinator records the passed check on the target issue or the pull request, then proceeds through the existing gates.
+- `check`: the explanation followed by one question per step. The completion screen reveals a confirmation phrase, and the user returns that phrase to the coordinator. The coordinator records the passed check on the execution plan issue for a pre-approval check, or on the target issue or the pull request otherwise, then proceeds through the existing gates.
 
 The following rules apply to both forms.
 
 - Present the explanation before any question. Do not present questions alone.
 - The user may switch a `check` to a `briefing` at any time.
+- The confirmation phrase must differ from `github.approval_phrase`, and the user returns it in conversation only, never as a GitHub comment.
+- Recording a check result is a comment, not a scope or completion criteria change. It does not void an approval.
 - Neither form replaces the approval record, the merge confirmation record, or any other existing gate.
 - The generated page or file follows [temporary artifacts](../integrations/ORCHESTRATOR.md#temporary-artifacts) and is not committed.
 

@@ -61,7 +61,7 @@ The following rules still apply, with the coordinator acting as its own worker.
   [the operating model](../core/OPERATING-MODEL.md#completion-and-verification).
 - The failure and retry rules in [failure and retry](#failure-and-retry), except the workspace termination and cleanup rule.
 - The occupancy check in
-  [continuous execution triggers](../workflows/LOOP-ENGINEERING.md#occupancy-check).
+  [the loop engineering workflow](../workflows/LOOP-ENGINEERING.md#occupancy-check).
 
 The completion report becomes the agent's answer to the user. It carries the
 same evidence listed in [completion reports](#completion-reports).
@@ -503,6 +503,11 @@ When no separate policy exists, keep a temporary artifact only in the workspace
 the orchestrator manages, and make it untracked with the repository's local
 exclude feature. Do not change the target repository's tracked `.gitignore` to
 hide a temporary artifact, and do not include such a file in a pull request.
+
+In no-orchestrator mode, keep a temporary artifact in a local untracked path
+instead. Do not publish a temporary artifact to an external service beyond
+presenting it to the user.
+
 Before the workspace is cleaned up, move the scope, completion criteria,
 priority, and retry decisions that future execution needs into GitHub, and the
 design decisions and constraints that future maintenance needs into the pull
