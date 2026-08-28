@@ -98,6 +98,9 @@ Run these steps when `language` is not `en`.
    `docs/env/ENVIRONMENT.md`, and `README.ko.md` so each one matches the
    headings step 3 just wrote. When `language` is `ko`, fix `README.md` the
    same way, because step 2 produced it by copying rather than translating.
+   Also point the `[English]` link in `README.md` and `README.ko.md` at
+   `archive/en/README.md`, because the copy in step 2 made the original link
+   point at itself.
    Each of these files keeps its own language. Only their link targets change.
    Do not touch the copies under `archive/en/`.
 5. Verify the result before reporting. Confirm that every relative link in every
