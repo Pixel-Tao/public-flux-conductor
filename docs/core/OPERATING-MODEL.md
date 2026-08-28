@@ -11,7 +11,7 @@ executable product code.
 
 - Work management through GitHub issues and the central project defined by `github.project_url` in [the environment file](../env/ENVIRONMENT.example.md)
 - The procedure that runs approved work as execution batches, work item tasks, and dispatches
-- Application of the design, planning, implementation, review, and verification procedures of the skill baselines listed in `skills.baselines` in [the environment file](../env/ENVIRONMENT.example.md)
+- Application of the design, planning, implementation, review, and verification procedures each agent harness provides, within the [worker capability contract](../integrations/ORCHESTRATOR.md#worker-capability-contract)
 - Records of the extra constraints and operational exceptions of each target repository
 
 The following items are out of scope for this repository.
@@ -35,7 +35,7 @@ completion criteria, and run the action itself outside this workflow.
 | GitHub | Issues, priority, approval records, pull requests, final work item state | Permanent |
 | Coordination repository documents | Shared policy, execution procedure, per-project exceptions | Permanent |
 | Orchestrator | Execution batches, work item tasks, dispatches, messages, agent lifecycle | While running |
-| Skill baselines | Design, planning, test-driven development, review, and verification methods | Procedural |
+| Agent harness | Design, planning, test-driven development, review, and verification procedures | Procedural, per platform |
 | Target repository | Implementation rules and that repository's `AGENTS.md` | Permanent |
 
 GitHub is the single source of truth for the state of every work item the
@@ -260,7 +260,7 @@ archive/
 └─ en/
 ```
 
-- `.gitignore` excludes `.superpowers/`, the local artifact path of the skill baselines, and `docs/env/ENVIRONMENT.md`, which records one host's values.
+- `.gitignore` excludes the local artifact paths a harness or an optional skill writes, and `docs/env/ENVIRONMENT.md`, which records one host's values.
 - `LICENSE` carries the license text of this repository.
 - `AGENTS.md` is the entry point. It carries the repository purpose, the prohibitions, and the document navigation paths only.
 - `CLAUDE.md` imports `AGENTS.md`, so a CLI that reads only `CLAUDE.md` gets the same entry point.
@@ -349,10 +349,10 @@ scope by adding work item tasks inside the orchestrator only.
 ## Separation of concerns
 
 - The orchestrator owns execution batches, work item tasks, dispatches, worker creation, messages, waiting, retries, and termination.
-- The skill baselines own brainstorming, plan writing, test-driven development, code review, and verification before completion.
-- When a skill baseline procedure calls for a parallel agent or a sub-agent, perform the actual worker creation and dispatch through the orchestrator.
+- The worker's harness owns brainstorming, plan writing, test-driven development, code review, and verification before completion, within the required verification and the target repository instructions.
+- When a harness procedure calls for a parallel agent or a sub-agent, perform the actual worker creation and dispatch through the orchestrator.
 - When work needs isolation, judge the need for isolation from the nature of the work, and let the orchestrator manage the workspace lifecycle.
-- A worker reads the target repository instructions first, then applies the skill baseline procedures.
+- A worker reads the target repository instructions first, then applies its harness procedures.
 - A worker sends the completion report only after finishing the required verification.
 - A completion report closes a dispatch. It is not an approval to set the GitHub state to `Done`.
 
@@ -368,7 +368,7 @@ performs the execution lifecycle directly, as defined in
 3. The user leaves the approval phrase as a comment on the execution plan issue, or instructs the agent to do so, which produces a verified approval comment.
 4. The coordinator creates an execution batch and a work item task graph from the approved execution plan.
 5. The coordinator dispatches the independent work item tasks first and manages questions and progress through orchestrator messages.
-6. The worker implements, verifies, and opens a pull request under the target repository rules and the skill baseline procedures.
+6. The worker implements, verifies, and opens a pull request under the target repository rules and its harness procedures.
 7. The coordinator confirms the completion report, the pull request, and the check results, then moves the item to `Review`.
 8. When the pull request is merged and the completion criteria are met, the coordinator moves the item to `Done` and summarizes the result on the execution plan issue.
 

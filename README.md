@@ -25,24 +25,20 @@ Install these before use. The templates assume they are present.
 | [GitHub CLI](https://cli.github.com/) | Reading and updating issues, projects, and pull requests |
 | One agent CLI | The agent that reads these instructions and does the work |
 
-**Recommended**
-
-| Dependency | Why |
-|---|---|
-| [Superpowers](https://github.com/obra/superpowers) | Design, planning, TDD, review, and verification workflows |
-| [Ponytail](https://github.com/DietrichGebert/ponytail) | Choosing the smallest implementation that satisfies the requirement |
-| [Karpathy Guidelines](https://github.com/multica-ai/andrej-karpathy-skills) | Checking assumptions, surgical changes, and verifiable goals |
-
-The dispatch gate in the orchestrator guide checks that the recommended
-baselines are installed and active. Installing them first is strongly
-recommended. Without them, the baseline item of that gate does not apply and you
-lose the review and verification discipline the workflows assume.
+The workflows rely on whatever design, planning, and verification procedure
+your agent already provides. They require only that your platform can run the
+target repository's verification commands and produce the completion evidence
+the orchestrator guide defines.
 
 **Optional**
 
 An orchestrator that manages runs, tasks, dispatches, and worker lifecycles.
 Without one, a single agent runs everything in dependency order. Set
 `orchestrator.name` to `none` and the documents adapt.
+
+Additional skills or skill sets on your agent platform. These documents require
+none, and no gate depends on one being installed. Add them when you want them,
+and record them in `skills.optional`.
 
 Check each upstream project's current instructions for installation commands.
 This README does not repeat them, because they change.

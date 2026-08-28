@@ -41,7 +41,7 @@ language named by `language` in
 
 - Git tracks only `.gitignore`, `LICENSE`, `AGENTS.md`, `CLAUDE.md`, `SETUP.md`, `README.md`, `README.ko.md`, `docs/**/*.md`, and `archive/**`.
 - `docs/env/ENVIRONMENT.md` is excluded from tracking. It records one host's values and belongs on that host. Commit it only on an explicit operator decision, and never in a public fork.
-- The skill baselines may keep local plans and work records under the path `.gitignore` excludes. Do not stage them and do not commit them.
+- A harness or an optional skill may keep local plans and work records under the path `.gitignore` excludes. Do not stage them and do not commit them.
 - `archive/en/` holds the English reference copy. Only the setup procedure creates or removes it. Do not modify its contents, and treat it as authoritative when a translation and its original conflict.
 - Do not commit product code, execution scripts, configuration, GitHub Actions workflows, generated files, or runtime state.
 - Do not create a document, a directory, or a template before the need is confirmed.
@@ -51,10 +51,10 @@ language named by `language` in
 
 - GitHub is the single source of truth for issues, priority, approval, pull requests, and final state.
 - The orchestrator owns execution batches, work item tasks, dispatches, and the agent lifecycle.
-- The skill baselines own the design, planning, implementation, review, and verification procedures.
+- The worker's harness owns the design, planning, implementation, review, and verification procedures, within the required verification and the target repository instructions.
 - When `orchestrator.name` is `none`, the agent manages the execution lifecycle directly, as defined in [no-orchestrator mode](docs/integrations/ORCHESTRATOR.md#no-orchestrator-mode).
 - Apply the target repository's instructions to actual code changes.
-- Perform worker creation and dispatch through the orchestrator even when a skill baseline procedure calls for agent delegation.
+- Perform worker creation and dispatch through the orchestrator even when a harness procedure calls for agent delegation.
 
 ## Execution gate
 

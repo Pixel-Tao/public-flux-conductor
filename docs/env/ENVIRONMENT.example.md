@@ -82,20 +82,19 @@ names your tool actually uses. The example below shows one possible tool.
 Verify what an alias resolves to before each dispatch. This table never
 overrides the platform's current model catalog.
 
-## Skill baselines
+## Optional skills
 
 | Key | Value | Required |
 |---|---|---|
-| `skills.baselines` | See the table below | No. When empty, the baseline gate does not apply. |
+| `skills.optional` | A list of additional skills installed on the platforms in use, or empty | No. Empty is the default, and an entry never gates a dispatch. |
 
-| Baseline | Upstream | Installed | Verified on |
-|---|---|---|---|
-| Superpowers | `obra/superpowers` | unknown | not yet checked |
-| Ponytail | `DietrichGebert/ponytail` | unknown | not yet checked |
-| Karpathy Guidelines | `multica-ai/andrej-karpathy-skills` | unknown | not yet checked |
+| Skill | Platform | Installed |
+|---|---|---|
+| | | |
 
-Record the date each entry was verified. An unverified baseline is not a
-satisfied gate.
+This table is a convenience record only. A missing or unverified entry does not
+block a dispatch and is not a failed gate. Do not add a rule that depends on an
+entry being present.
 
 ## Scheduled wake
 
