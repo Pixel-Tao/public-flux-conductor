@@ -4,7 +4,7 @@
 
 This document defines the responsibility, handoff, conflict, and failure rules
 that keep the execution lifecycle and the working method from controlling the
-same thing twice when an orchestrator and the skill baselines run together.
+same thing twice when an orchestrator and a worker's harness run together.
 
 Higher-level policy follows [the operating model](../core/OPERATING-MODEL.md).
 Approval and permanent state follow
@@ -12,12 +12,12 @@ Approval and permanent state follow
 
 The [fast path](../core/OPERATING-MODEL.md#fast-path) is not subject to this
 procedure. It creates no execution batch, no work item task, and no dispatch,
-and it produces no separate design or planning artifact from the skill
-baselines. The target repository instructions and the related verification
-still apply unchanged.
+and it produces no separate design or planning artifact from a harness
+planning procedure. The target repository instructions and the related
+verification still apply unchanged.
 
 This document does not cover the actual commands of an orchestration tool, the
-GitHub project setup, the full usage of the skill baselines, or the
+GitHub project setup, the internal working method of any agent harness, or the
 implementation rules of a target repository.
 
 ## Role vocabulary
@@ -79,8 +79,12 @@ than a lock, so run one coordinator at a time.
 |---|---|---|
 | Work scope, priority, completion criteria, approval, permanent state | GitHub | User and coordinator |
 | Execution batches, work item tasks, dispatches, workspaces, messages, waiting, retries, worker termination | The orchestrator | coordinator |
-| Analysis, diagnosis, plan execution, test-driven development, review, verification before completion | The skill baselines | coordinator and worker |
+| Analysis, diagnosis, plan execution, test-driven development, review, verification before completion | The worker's harness | coordinator and worker |
 | Code style, test commands, branch and pull request rules, implementation constraints | The target repository instructions | worker |
+
+The harness chooses the procedure. The required verification, the completion
+evidence, and the approved scope are fixed by the execution plan and the target
+repository instructions, and a harness preference does not override them.
 
 Do not create a global precedence order. Apply authority per area. When the
 rules of two areas cannot both be satisfied, or when the applicable area is
@@ -129,7 +133,7 @@ follows [question and approval boundaries](#question-and-approval-boundaries).
 
 ## Responsibility and substitution rules
 
-| Need | Role of the skill baselines | Role of the orchestrator | Prohibited |
+| Need | Role of the worker | Role of the orchestrator | Prohibited |
 |---|---|---|---|
 | Work isolation | Judging when isolation is needed | Managing the workspace lifecycle | A worker creating or deleting a separate worktree |
 | Work decomposition | Proposing independent work and dependencies | Creating and changing the work item task graph of an execution batch | Expanding the approved scope into a new work item task outside the orchestrator |
@@ -139,10 +143,10 @@ follows [question and approval boundaries](#question-and-approval-boundaries).
 | Verification | Providing the required verification method and the result judgment | Delivering the result and the execution state | Assuming verification passed from orchestrator state alone |
 | Completion | Providing the verification and review methods used before completion | Collecting the completion report and closing the workspace | Setting a GitHub item to `Done` from a completion report alone |
 
-The orchestrator performs the actual action even when a skill baseline
-procedure calls for worktree creation, sub-agent deployment, waiting for work,
-a retry, or workspace cleanup. The skill baselines judge the need and the
-method, and the orchestrator controls the execution lifecycle.
+The orchestrator performs the actual action even when a harness procedure calls
+for worktree creation, sub-agent deployment, waiting for work, a retry, or
+workspace cleanup. The worker judges the need and the method, and the
+orchestrator controls the execution lifecycle.
 
 ## Dispatch preconditions and worker handoff
 
@@ -154,7 +158,7 @@ The coordinator confirms the following before a dispatch.
 - The work item task dependencies and the groups that can run in parallel are clear.
 - The target repository and the `AGENTS.md` to apply are identified.
 - The completion criteria and the required verification method can be delivered.
-- The [common skill baselines](#common-skill-baselines) are confirmed in the home the worker will use.
+- The worker's platform meets the [worker capability contract](#worker-capability-contract).
 - The [settled mockup](#uiux-mockup-decision) is recorded on the target issue when the work includes a UI/UX change.
 
 Each dispatch delivers the execution plan and target issue links, the included
@@ -164,8 +168,8 @@ requirement, and the known risks.
 
 A worker treats the approved execution plan as design approval. The worker does
 not brainstorm the same scope again, does not require a separate design
-approval, and starts from the skill baseline implementation procedure that fits
-the work type. When the handoff input is insufficient or contradictory, the
+approval, and starts from the implementation procedure its own harness provides
+for the work type. When the handoff input is insufficient or contradictory, the
 worker asks instead of filling the gap with an assumption.
 
 ## Execution permission contract
@@ -328,79 +332,51 @@ no compatible default worker exists either, do not start the work item task.
 Treat it as waiting on orchestrator capacity or on the execution environment,
 and do not repeat a failed dispatch with the same model and strategy.
 
-## Common skill baselines
+## Worker capability contract
 
-The coordinator and the worker use the same baselines on every agent execution
-platform. A user decision is required to add or remove a baseline.
+A worker runs inside its own agent harness. This repository does not prescribe
+which design, planning, implementation, review, or verification procedure that
+harness uses. It requires only that every platform can produce the same gates
+and the same evidence, so that results from different platforms stay
+comparable.
 
-| Baseline | Upstream | Role |
-|---|---|---|
-| Superpowers | `obra/superpowers` | Selects and applies the design, planning, implementation, review, and verification workflow |
-| Ponytail | `DietrichGebert/ponytail` | Selects the smallest implementation that meets the requirements in coding work |
-| Karpathy Guidelines | `multica-ai/andrej-karpathy-skills` | Reinforces judgment and change discipline, and confirms assumptions, simplicity, surgical changes, and verifiable goals |
+Every agent execution platform used for a development or review dispatch meets
+the following.
 
-The table above is the reference set. `skills.baselines` in
-[the environment file](../env/ENVIRONMENT.example.md) defines the list actually
-in force. When `skills.baselines` is empty, the baseline item of
-[the dispatch gate](#dispatch-gate) does not apply.
+- It can run the verification commands the target repository defines, or report exactly which command it could not run and why.
+- It can produce every item required by [completion reports](#completion-reports).
+- It can reach the question and escalation paths defined in [communication and delegation boundaries](#communication-and-delegation-boundaries).
+- It applies the target repository instructions ahead of its own default working style.
 
-The workflow baseline decides the workflow, the guideline baseline reinforces
-judgment and change discipline, and the minimal implementation baseline selects
-the smallest implementation. The target repository instructions, the safety
-rules, and the user approval take precedence. Do not skip a required design,
-test-driven development, or verification step of the workflow baseline in the
-name of a smaller implementation.
+A harness preference never overrides the approved scope, the required
+verification, the granted permissions, or the completion criteria. When a
+harness default and the target repository instructions conflict, the target
+repository instructions win. When the conflict cannot be resolved inside the
+approved scope, the worker asks instead of choosing on its own initiative.
 
-When the same baseline is available through several distribution paths, use the
-path that does not split the version across platforms. Use the upstream above
-as the reference. A platform's curated distribution can substitute for an
-upstream only when its version is confirmed to match.
+Procedure shape may differ across platforms. Gates and evidence may not.
 
-### Installation scope
+### Optional skills
 
-Install a baseline in the user scope of each agent execution platform, so that
-it stays discoverable in a new session regardless of the repository and the
-selected model. Residence does not mean always injecting the full text of every
-skill. It means using the platform's official activation and each skill's
-trigger. Do not silently ignore a missing installation, a deactivated skill, a
-version mismatch, or an unapproved hook.
+An operator may install additional skills or skill sets on an agent platform.
+Record them in `skills.optional` in
+[the environment file](../env/ENVIRONMENT.example.md).
 
-One platform's user scope can split into more than one depending on how the
-platform is launched. Codex changes its configuration home through
-`CODEX_HOME`, so a worker launched with a dedicated home does not pick up an
-installation made only in the default home. Claude Code shares one directory
-across launch contexts unless `CLAUDE_CONFIG_DIR` is set. Confirm the home a
-target platform actually reads before installing or removing, and install the
-same baselines in each home when the homes split.
-
-Use the platform's official user scope installation feature. Do not copy skill
-source text into a configuration path directly. When a copy and a platform
-installation exist together, the same skill loads twice, so remove the copy. Do
-not rely on memory for an installation command. Confirm it in the upstream and
-in the platform's official instructions at setup time.
-
-Installation and update do not automatically follow the upstream default
-branch. Prefer an official release. When a branch installation is needed,
-record the confirmed ref and source in the local environment record. The local
-environment record is an untracked local file the operator keeps outside this
-repository, because it holds host paths and trust decisions that a public
-repository must not carry. When the upstream changes, confirm discovery and
-activation again in a new session. Do not record a user home path or a plugin
-trust decision in GitHub.
+Optional skills are never required. A missing, inactive, or version-mismatched
+optional skill does not block a dispatch and is not a failed gate. Do not write
+a rule, a gate, or a completion criterion that depends on one being present.
+Do not install, update, or change the activation of a skill without an explicit
+configuration request from the user.
 
 ### Dispatch gate
 
 Do not start a development or review dispatch before confirming all of the
 following.
 
-- The upstream and the installation source of every baseline in `skills.baselines` can be identified.
-- Every baseline is discoverable and active in the home the worker will use.
-- The required activation and hook permissions are valid.
+- The platform meets the [worker capability contract](#worker-capability-contract).
+- The verification commands of the target repository are identified and runnable, or the gap and its impact are recorded.
+- The question and escalation paths are valid under the granted permissions.
 - The platform instructions do not conflict with the orchestrator responsibility boundaries.
-
-A baseline whose automatic activation hook requires a separate runtime is not
-reported as a complete installation when that hook is unavailable and only the
-skill itself works.
 
 A read-only environment check may be run to diagnose the cause of a missing
 item. Perform an installation or a permission change only on an explicit
@@ -432,7 +408,7 @@ is not a [fast path](../core/OPERATING-MODEL.md#fast-path) candidate.
 1. The coordinator confirms the valid approval in GitHub and the state of the target issues.
 2. The coordinator creates one execution batch for one execution plan and builds a work item task graph per issue.
 3. The orchestrator assigns a workspace and a worker to each independent work item task and dispatches it.
-4. The worker reads the target repository instructions and applies the skill baseline procedures inside the approved scope.
+4. The worker reads the target repository instructions and applies its harness procedures inside the approved scope.
 5. A worker question reaches the coordinator through the orchestrator.
 6. The worker finishes the implementation and the required verification, then sends a completion report that includes the evidence.
 7. The coordinator confirms the issue, the pull request, and the verification evidence, then moves the GitHub item to `Review`.
@@ -520,8 +496,8 @@ A worker sends every question to the coordinator through the orchestrator.
 
 ## Temporary artifacts
 
-The design, plan, and work records that the skill baselines produce follow the
-existing policy of the target repository first.
+The design, plan, and work records a worker produces follow the existing policy
+of the target repository first.
 
 When no separate policy exists, keep a temporary artifact only in the workspace
 the orchestrator manages, and make it untracked with the repository's local
@@ -536,7 +512,7 @@ request or the target repository documents, as defined in
 ## Failure and retry
 
 - Do not judge work as failed from an orchestrator wait timeout alone.
-- Analyze a failure cause with the diagnostic procedure of the skill baselines.
+- Analyze a failure cause with the harness diagnostic procedure and the target repository's test and build results.
 - The coordinator records the cause and the new strategy in the GitHub issue, then retries with a new dispatch.
 - Do not repeat an identical retry whose cause and strategy are unchanged.
 - Move the GitHub item to `Blocked` for an external dependency, a repeated failure, or a pending user decision.
@@ -562,7 +538,7 @@ The GitHub `Done` judgment follows the completion criteria in
 
 ## Operational verification checklist
 
-1. The final responsibilities of GitHub, the orchestrator, the skill baselines, and the target repository do not overlap.
+1. The final responsibilities of GitHub, the orchestrator, the worker's harness, and the target repository do not overlap.
 2. The orchestrator alone performs worktrees, workers, dispatches, messages, retries, and cleanup. Not applicable in no-orchestrator mode.
 3. The approved execution plan is used as the design approval input for a worker.
 4. Worker questions pass through the orchestrator, and an approved scope change requires GitHub re-approval.
@@ -572,7 +548,7 @@ The GitHub `Done` judgment follows the completion criteria in
 8. A completed worker is settled by reuse, by explicit retention, or by a safe release. Not applicable in no-orchestrator mode.
 9. A lightweight worker meets every lightweight condition, and the runtime enforces its read-only permission.
 10. Platform and model fallback and escalation create no downward quality switch, no hidden work item task, and no approval bypass.
-11. The common skill baselines are discoverable in the worker's home, and their versions match across platforms.
+11. Every agent execution platform meets the worker capability contract, and a difference in harness procedure changes no gate and no completion evidence requirement.
 12. Each dispatch receives only the minimum capability it needs, and the constraints that could not be enforced and the question and escalation paths are recorded in the handoff.
 13. The stored content is confirmed after a handoff is created and before a worker is attached, and a command's success return is not used as evidence that the handoff was preserved. Not applicable in no-orchestrator mode.
 14. The receiver's ability to accept input is confirmed before a handoff injection, and readiness is not assumed from a single readiness signal. Not applicable in no-orchestrator mode.

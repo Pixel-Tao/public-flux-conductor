@@ -36,9 +36,9 @@ When the user does not know a value, skip it and record it as unresolved.
 5. **Agent platforms.** Which agent platforms are in use? For each, which model
    and effort serve as the default tier, the lightweight read-only tier, and
    the escalation order?
-6. **Skill baselines.** Which shared skill baselines are installed and active
-   in the home the workers actually use? Check read-only. Record what could not
-   be verified.
+6. **Optional skills.** Are any additional skills installed on the platforms in
+   use? Check read-only. An empty answer is valid and is the default. Do not
+   install anything during setup.
 7. **Orchestrator.** Is an orchestrator in use? If yes, ask for its name, where
    its current command guide lives, and the term mapping described in
    [role vocabulary](docs/integrations/ORCHESTRATOR.md#role-vocabulary). If no,

@@ -141,9 +141,10 @@ The execution environment must be able to state the following limits.
 - The spare capacity reserved for `P0` work, and the safe waiting criteria for existing work
 
 Actual limit values differ by machine and by the nature of the work, so record
-them in the
-[local environment record](../integrations/ORCHESTRATOR.md#installation-scope)
-rather than fixing them in this repository.
+them in a local environment record rather than fixing them in this repository.
+That record is an untracked local file the operator keeps outside this
+repository, because it holds host paths and other values a public repository
+must not carry.
 The coordinator confirms the values in the current execution environment
 immediately before a dispatch.
 
