@@ -33,9 +33,10 @@ When the user does not know a value, skip it and record it as unresolved.
 4. **Approval phrase and approvers.** Which exact comment text records approval?
    It must be one fixed phrase. Which GitHub logins may leave it? Only a comment
    by one of those logins is a valid approval record.
-5. **Agent platforms.** Which agent platforms are in use? For each, which model
-   and effort serve as the default tier, the lightweight read-only tier, and
-   the escalation order?
+5. **Agent platforms.** Which agent platforms are in use? Record their names.
+   Do not bind the environment to a model or a reasoning setting. Worker
+   selection follows
+   [worker capability routing](docs/integrations/ORCHESTRATOR.md#worker-capability-routing).
 6. **Optional skills.** Are any additional skills installed on the platforms in
    use? Check read-only. An empty answer is valid and is the default. Do not
    install anything during setup.

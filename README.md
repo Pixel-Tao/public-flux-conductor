@@ -25,10 +25,13 @@ Install these before use. The templates assume they are present.
 | [GitHub CLI](https://cli.github.com/) | Reading and updating issues, projects, and pull requests |
 | One agent CLI | The agent that reads these instructions and does the work |
 
-The workflows rely on whatever design, planning, and verification procedure
-your agent already provides. They require only that your platform can run the
-target repository's verification commands and produce the completion evidence
-the orchestrator guide defines.
+The workflows define a minimum
+[development work contract](docs/core/OPERATING-MODEL.md#development-work-contract)
+for understanding, changing, reviewing, and verifying a target repository.
+Each agent can use its own procedure to satisfy that contract, so no particular
+skill set is required. The documents require no particular model; worker
+selection follows
+[worker capability routing](docs/integrations/ORCHESTRATOR.md#worker-capability-routing).
 
 **Optional**
 

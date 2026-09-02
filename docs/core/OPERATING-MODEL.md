@@ -11,7 +11,7 @@ executable product code.
 
 - Work management through GitHub issues and the central project defined by `github.project_url` in [the environment file](../env/ENVIRONMENT.example.md)
 - The procedure that runs approved work as execution batches, work item tasks, and dispatches
-- Application of the design, planning, implementation, review, and verification procedures each agent harness provides, within the [worker capability contract](../integrations/ORCHESTRATOR.md#worker-capability-contract)
+- Application of the [development work contract](#development-work-contract) through the procedures each agent harness provides
 - Records of the extra constraints and operational exceptions of each target repository
 
 The following items are out of scope for this repository.
@@ -35,7 +35,7 @@ completion criteria, and run the action itself outside this workflow.
 | GitHub | Issues, priority, approval records, pull requests, final work item state | Permanent |
 | Coordination repository documents | Shared policy, execution procedure, per-project exceptions | Permanent |
 | Orchestrator | Execution batches, work item tasks, dispatches, messages, agent lifecycle | While running |
-| Agent harness | Design, planning, test-driven development, review, and verification procedures | Procedural, per platform |
+| Agent harness | The procedure used to satisfy the development work contract | Procedural, per platform |
 | Target repository | Implementation rules and that repository's `AGENTS.md` | Permanent |
 
 GitHub is the single source of truth for the state of every work item the
@@ -123,9 +123,9 @@ nothing and every condition above holds, use the fast path. Writing
 The fast path creates no issue, no execution plan, no project state change, no
 execution batch, no work item task, and no dispatch. It also creates no
 separate brainstorming, design approval, or implementation plan artifact. The
-agent reads the applicable repository instructions and the directly related
-files, states the scope in one sentence, then makes the minimum change and runs
-the smallest relevant verification.
+agent follows the [development work contract](#development-work-contract),
+states the scope in one sentence, then makes the minimum change and runs the
+smallest relevant verification.
 
 A fast path instruction approves the requested file changes only. Perform a
 commit, a push, a pull request, a deployment, or any other external state
@@ -137,6 +137,42 @@ outside those conditions, stop making further changes and report the reason for
 switching to the standard workflow. Do not discard changes already made on your
 own initiative. Get a user decision before a commit or a push. Do not skip a
 failed verification. Do not treat a failed verification as a success.
+
+## Development work contract
+
+This contract applies to every development change, regardless of its route,
+platform, or harness. It defines the minimum understanding and evidence the
+work requires, not a fixed brainstorming, design, planning, or test-driven
+development procedure. The agent harness chooses how to satisfy it.
+
+Before changing a repository, the agent does all of the following.
+
+- Read that repository's `AGENTS.md` and only the linked documents relevant to the change.
+- Trace the affected behavior through its entry points, implementation, callers, dependencies, tests, and any public, data, security, or operational boundary it can change.
+- Confirm the goal, the included and excluded scope, the observable completion criteria, and the verification method.
+- Identify the existing patterns and invariants to preserve, and any material decision that the request or approved record has not settled.
+
+Resolve an unsettled decision before implementation when it can change the
+approved scope, the completion criteria, externally visible behavior, an
+architectural boundary, data handling, security, or operations. Follow
+[instruction boundaries](#instruction-boundaries) and, for dispatched work,
+[question and approval boundaries](../integrations/ORCHESTRATOR.md#question-and-approval-boundaries)
+instead of guessing who can decide it. The agent can decide a local
+implementation detail that changes none of them. Record a settled non-obvious
+decision as defined in
+[recoverable understanding](#recoverable-understanding).
+
+During and after the change, the agent does all of the following.
+
+- Reuse the repository's existing patterns and make the smallest change that satisfies the requested or approved outcome.
+- Add or update a directly relevant test when the repository has an applicable test layer; otherwise record the manual verification.
+- Review the final diff against the requested or approved scope, the completion criteria, and likely regressions.
+- Run the smallest relevant verification and report every check that could not run, with its reason and impact.
+
+No separate artifact is required when the issue, execution plan, repository
+documents, pull request, diff, and verification evidence already preserve the
+needed understanding. A temporary artifact follows
+[temporary artifacts](../integrations/ORCHESTRATOR.md#temporary-artifacts).
 
 ## Research and advisory answers
 
@@ -194,10 +230,9 @@ When research finds that a file change or an external state change is needed,
 do not perform it before a separate request. Only after a separate request does
 that change become a fast path or standard workflow candidate.
 
-When research runs as a lightweight read-only worker, additionally apply the
-permission enforcement, the source citation, and the default worker
-verification conditions in
-[worker model routing](../integrations/ORCHESTRATOR.md#worker-model-routing).
+When research runs as a read-only assistant worker, additionally apply the
+permission enforcement, source citation, and result cross-check requirements in
+[worker capability routing](../integrations/ORCHESTRATOR.md#worker-capability-routing).
 
 ## Natural language requests and issue registration
 
@@ -349,7 +384,8 @@ scope by adding work item tasks inside the orchestrator only.
 ## Separation of concerns
 
 - The orchestrator owns execution batches, work item tasks, dispatches, worker creation, messages, waiting, retries, and termination.
-- The worker's harness owns brainstorming, plan writing, test-driven development, code review, and verification before completion, within the required verification and the target repository instructions.
+- The [development work contract](#development-work-contract) fixes the minimum understanding and evidence required from every worker.
+- The worker's harness owns the exact brainstorming, planning, implementation, review, and verification procedure used to satisfy that contract, within the required verification and the target repository instructions.
 - When a harness procedure calls for a parallel agent or a sub-agent, perform the actual worker creation and dispatch through the orchestrator.
 - When work needs isolation, judge the need for isolation from the nature of the work, and let the orchestrator manage the workspace lifecycle.
 - A worker reads the target repository instructions first, then applies its harness procedures.
@@ -368,7 +404,7 @@ performs the execution lifecycle directly, as defined in
 3. The user leaves the approval phrase as a comment on the execution plan issue, or instructs the agent to do so, which produces a verified approval comment.
 4. The coordinator creates an execution batch and a work item task graph from the approved execution plan.
 5. The coordinator dispatches the independent work item tasks first and manages questions and progress through orchestrator messages.
-6. The worker implements, verifies, and opens a pull request under the target repository rules and its harness procedures.
+6. The worker follows the development work contract through its harness procedure, implements, verifies, and opens a pull request under the target repository rules.
 7. The coordinator confirms the completion report, the pull request, and the check results, then moves the item to `Review`.
 8. When the pull request is merged and the completion criteria are met, the coordinator moves the item to `Done` and summarizes the result on the execution plan issue.
 

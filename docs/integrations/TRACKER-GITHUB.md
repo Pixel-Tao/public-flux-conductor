@@ -286,6 +286,16 @@ Include the following detail after the summary.
 - Expected risks and how to check them
 - The required verification and the pull request requirement for each issue
 
+For an issue whose implementation direction is not obvious from the target
+issue and the target repository, also include the following.
+
+- The documents, code areas, interfaces, and tests used to confirm the current behavior and constraints
+- The intended implementation direction, the affected and preserved contracts, and the reason for a materially rejected alternative
+
+Link to or name the canonical source instead of copying its contents into the
+execution plan. These items provide the implementation basis required by the
+[development work contract](../core/OPERATING-MODEL.md#development-work-contract).
+
 An execution plan that contains exactly one issue meeting the
 [fast path](../core/OPERATING-MODEL.md#fast-path) conditions, excluding the
 condition that the central project does not already track the work, may consist

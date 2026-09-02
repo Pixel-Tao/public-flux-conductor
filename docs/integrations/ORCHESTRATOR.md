@@ -48,7 +48,7 @@ The following sections do not apply.
 - Worker handoff, handoff verification, and receiver readiness checks
 - Messages between a coordinator and workers
 - Worker reuse, retention, and release
-- Worker selection and model routing in [worker model routing](#worker-model-routing)
+- Worker selection in [worker capability routing](#worker-capability-routing)
 - The orchestrator's ownership of a workspace in [the authority model](#authority-model), in [responsibility and substitution rules](#responsibility-and-substitution-rules), in [communication and delegation boundaries](#communication-and-delegation-boundaries), and in [failure and retry](#failure-and-retry)
 - The orchestrator-managed workspace as the place a temporary artifact lives, in [temporary artifacts](#temporary-artifacts)
 
@@ -82,9 +82,11 @@ than a lock, so run one coordinator at a time.
 | Analysis, diagnosis, plan execution, test-driven development, review, verification before completion | The worker's harness | coordinator and worker |
 | Code style, test commands, branch and pull request rules, implementation constraints | The target repository instructions | worker |
 
-The harness chooses the procedure. The required verification, the completion
-evidence, and the approved scope are fixed by the execution plan and the target
-repository instructions, and a harness preference does not override them.
+The harness chooses the procedure used to satisfy the
+[development work contract](../core/OPERATING-MODEL.md#development-work-contract).
+The required verification, the completion evidence, and the approved scope are
+fixed by the execution plan and the target repository instructions, and a
+harness preference does not override them.
 
 Do not create a global precedence order. Apply authority per area. When the
 rules of two areas cannot both be satisfied, or when the applicable area is
@@ -114,18 +116,19 @@ narrow an obligation or a prohibition another section states.
 | worker | A new subordinate agent | Prohibited. The orchestrator alone creates workers and dispatches them |
 | worker | A new workspace | Prohibited. The orchestrator owns the workspace lifecycle, including creating and deleting a worktree |
 | worker | A new work item task | Prohibited. Do not extend the approved scope outside the orchestrator |
-| lightweight worker | Files and external state | Prohibited. The runtime enforces read-only access |
-| lightweight worker | A final completion report | Prohibited. A default worker or the coordinator confirms the result |
+| read-only assistant worker | Files and external state | Prohibited. The runtime enforces read-only access |
+| read-only assistant worker | A final completion report | Prohibited. A worker or the coordinator confirms the result |
 
 Question and escalation paths stay open under every permission setting. When a
 tool or a permission setting closes them, do not use that setting.
 
 When `orchestrator.name` in
 [the environment file](../env/ENVIRONMENT.example.md) is `none`, the worker and
-lightweight worker rows do not apply, because no separate worker exists. The
-coordinator rows that name the orchestrator apply only when one is configured.
-The User and coordinator paths and the rule that question and escalation paths
-stay open apply unchanged. See [no-orchestrator mode](#no-orchestrator-mode).
+read-only assistant worker rows do not apply, because no separate worker exists.
+The coordinator rows that name the orchestrator apply only when one is
+configured. The User and coordinator paths and the rule that question and
+escalation paths stay open apply unchanged. See
+[no-orchestrator mode](#no-orchestrator-mode).
 
 This table decides communication only. What each party may settle follows
 [the authority model](#authority-model), and the approval a scope change needs
@@ -158,19 +161,24 @@ The coordinator confirms the following before a dispatch.
 - The work item task dependencies and the groups that can run in parallel are clear.
 - The target repository and the `AGENTS.md` to apply are identified.
 - The completion criteria and the required verification method can be delivered.
+- A non-obvious implementation direction has the basis required by [execution plans and approval](TRACKER-GITHUB.md#execution-plans-and-approval).
 - The worker's platform meets the [worker capability contract](#worker-capability-contract).
 - The [settled mockup](#uiux-mockup-decision) is recorded on the target issue when the work includes a UI/UX change.
 
 Each dispatch delivers the execution plan and target issue links, the included
 and excluded scope, the completion criteria, the dependencies, the target
 repository instructions, the required verification, the pull request
-requirement, and the known risks.
+requirement, the known risks, and the implementation basis when one is
+required.
 
-A worker treats the approved execution plan as design approval. The worker does
-not brainstorm the same scope again, does not require a separate design
-approval, and starts from the implementation procedure its own harness provides
-for the work type. When the handoff input is insufficient or contradictory, the
-worker asks instead of filling the gap with an assumption.
+The approved execution plan fixes the scope and the design decisions it records;
+it does not approve an unstated design choice. The worker does not reopen a
+settled decision or require a separate approval for it. Before implementation,
+the worker follows the
+[development work contract](../core/OPERATING-MODEL.md#development-work-contract)
+to confirm that the approved basis still matches the target repository. When
+the handoff is insufficient, contradictory, or inconsistent with the actual
+repository, the worker asks instead of filling the gap with an assumption.
 
 ## Execution permission contract
 
@@ -192,18 +200,16 @@ The runtime must enforce a permission, not a prompt instruction. The
 enforcement layer differs per platform. Use only the platforms registered in
 `agent.platforms` in [the environment file](../env/ENVIRONMENT.example.md).
 
-| Platform | Enforcement layer | Means |
+| Enforcement layer | What it constrains | Limitation to confirm |
 |---|---|---|
-| Codex | Shell execution sandbox | Sandbox policy, sandbox permission list, approval policy |
-| Claude Code | Per-tool allow and deny | Allow and deny tool lists, permission mode |
+| Filesystem and network sandbox | Reachable paths and network access | It may not distinguish how an allowed tool is used |
+| Tool allow and deny rules | Callable tools | They may not narrow the access range inside an allowed tool |
 
-The two layers do not cover the same scope. A sandbox blocks filesystem and
-network access but does not distinguish the use of an allowed tool itself. A
-tool list blocks a tool call but cannot narrow the access range inside an
-allowed tool. The same `read only` label blocks different things on different
-platforms, so confirm what a platform actually blocks before specifying it.
-When the needed constraint cannot be enforced, use a default worker under the
-lightweight worker conditions in [worker model routing](#worker-model-routing).
+The two enforcement types do not cover the same scope. The same `read only`
+label blocks different things on different platforms, so confirm what a
+platform actually blocks before specifying it. When the runtime cannot enforce
+read-only access, use a worker under the research and advisory rules;
+do not dispatch or describe it as a read-only assistant worker.
 
 Distinguish the denial style as well. A mode that asks for approval and a mode
 that denies without asking produce different results. In a mode that denies
@@ -226,15 +232,16 @@ Each dispatch handoff delivers the following.
 A worker that needs a capability it was not granted stops and asks rather than
 working around it.
 
-## Worker model routing
+## Worker capability routing
 
-Do not choose a worker model by platform name alone. Choose it from the work
-grade to perform inside the approved work item task and from the features the
-current runtime supports. Use only two work grades, `default` and
-`lightweight read-only`. Use `balanced` only as an upward fallback for when no
-lightweight combination is available.
+Choose a worker from the capabilities the approved work needs and the features
+the current runtime supports. This repository does not name, rank, or require
+any model or reasoning setting. A model selected by the user, the platform, or
+the orchestrator is acceptable only when the resulting worker meets the same
+capability, permission, gate, and evidence requirements.
 
-Use a default worker when the work includes any of the following.
+Do not use a read-only assistant worker when the work includes any of the
+following.
 
 - Changing a code or documentation file, creating a commit, or opening a pull request
 - Judging architecture, security, data integrity, or operational safety
@@ -243,7 +250,7 @@ Use a default worker when the work includes any of the following.
 - Multi-step dependent reasoning or interpretation of an ambiguous requirement
 - Work that changes external state or affects a user approval
 
-Use a lightweight read-only assistant worker only when all of the following
+Use a read-only assistant worker only when all of the following
 conditions hold.
 
 1. The scope is an independent and limited assistant scope inside an existing approved work item task.
@@ -251,86 +258,63 @@ conditions hold.
 3. The result format and the exit condition are clear, as in collecting, classifying, listing, or extracting material in a structured form.
 4. The work needs no architecture, security, cause confirmation, review, or completion judgment.
 5. The result can carry the sources used, the gaps, and the uncertainties.
-6. A default worker or the coordinator is designated to check the result.
+6. A worker or the coordinator is designated to check the result.
 
 Material organization, codebase exploration, file listing, duplicate issue
 candidate research, log and test result summaries, and information extraction
-in a stated format can be classified as lightweight work when they meet the
+in a stated format can use a read-only assistant worker when they meet the
 conditions above.
 
-A lightweight worker does not change a file, create a commit, open a pull
+A read-only assistant worker does not change a file, create a commit, open a pull
 request, create a separate GitHub issue, create a hidden work item task, or
-send the final completion report. Creating a lightweight assistant worker does
+send the final completion report. Creating a read-only assistant worker does
 not change the existing issue to work item task relation, and the orchestrator
 alone manages workers and dispatches.
 
-The coordinator selects a platform and a model in the following order.
+The coordinator selects a platform and a worker in the following order.
 
-1. Classify the work as default or lightweight read-only.
-2. Confirm the available platforms and the model and reasoning setting combinations in the orchestrator and agent platform instructions that match the current runtime and version.
-3. Keep as candidates only the platforms that can handle the target repository instructions, the required tools, the context, and the input format.
-4. For lightweight work, use only a platform that can enforce read-only through a runtime tool or a permission rather than through a prompt instruction.
-5. Decide the model and the reasoning setting from the current role mapping of the selected platform.
-6. Escalate within the same platform in lightweight, balanced, default order when the lightweight model and reasoning setting combination is unsupported.
-7. Use another platform as an alternative candidate of the same grade only when repository instruction delivery, tools, input, permissions, and result format are equivalent.
-8. Use a compatible default quality model when no valid platform mapping exists or the state is unclear.
+1. Decide whether the work meets every read-only assistant condition. Otherwise select another worker.
+2. Confirm the available platforms against the current orchestrator and platform instructions.
+3. Keep as candidates only the platforms that can handle the target repository instructions, the required tools, the context, the input, the result format, and the worker capability contract.
+4. For a read-only assistant worker, use only a platform that can enforce read-only access through the runtime rather than through a prompt instruction.
+5. Prefer a platform the user named when it meets the same conditions. A named platform bypasses no requirement.
 
-`agent.model_map` in [the environment file](../env/ENVIRONMENT.example.md)
-defines the preferred platform, model, and reasoning setting for each work
-grade, and the upward fallback order.
+When changing platforms, do not assume that the target repository's `AGENTS.md`
+and the approved execution plan are delivered automatically. Include the
+instruction links and the needed content in the handoff.
 
-That mapping does not take precedence over runtime availability and the model
-catalog. Confirm the model an alias actually points at, the reasoning effort,
-and the tool and permission support immediately before a dispatch. When a
-requested reasoning effort is unsupported, do not silently drop to a lower
-effort. Use the next upward combination instead.
+A read-only assistant worker dispatch delivers the linked approved work item
+task, the assistant scope, the platform, the enforced read-only tools and
+permissions, the result format and exit condition, the required source and
+uncertainty notation, and the worker or coordinator that will check the
+result.
 
-When the user states a platform or a model, prefer it within the range that
-satisfies the compatibility and safety conditions. When those conditions are
-not satisfied, do not execute, and report the alternative combination and the
-reason. When changing platform, do not assume that the target repository's
-`AGENTS.md` and the approved execution plan are delivered automatically.
-Include the instruction links and the needed content in the handoff.
+A read-only assistant result presents the paths or links of the files, issues,
+logs, and documents used, and separates facts from estimates and gaps from
+conflicting evidence. The worker or the coordinator cross-checks the key
+sources before using the result.
 
-A lightweight assistant worker dispatch delivers the linked approved work item
-task and the assistant scope, the work grade, the platform, the model and
-reasoning setting, the enforced read-only tools and permissions, the result
-format and the exit condition, the required source and uncertainty notation,
-and the default worker or coordinator that will check the result.
-
-A lightweight result presents the paths or links of the files, issues, logs,
-and documents used, and separates facts from estimates and gaps from
-conflicting evidence. The default worker or the coordinator cross-checks the
-key sources before using the result.
-
-Stop lightweight work and escalate to a default worker in the following
-situations.
+Stop the read-only assistant dispatch and replace it with another worker that
+meets the full task requirements in the following situations.
 
 - The question is ambiguous, or an important choice is needed.
 - Sources conflict and a judgment is needed.
 - A file change, an external state change, or an additional permission is needed.
 - The scope changes to security, architecture, cause confirmation, independent review, or a completion judgment.
-- The input exceeds the context, tool, or format support of the lightweight model.
+- The input exceeds the context, tool, or format support of the current worker.
 - Result verification finds a gap or a reliability problem.
 
-A model or platform escalation can be performed inside the same approved work
-item task without new user approval while the scope and the completion criteria
-stay unchanged. Worker replacement and result delivery follow the current
-orchestrator lifecycle instructions. When the scope or the retry strategy
-changes, apply the existing GitHub re-approval and failure handling rules.
+Worker or platform replacement can stay inside the same approved work item task
+without new user approval while the scope and the completion criteria stay
+unchanged. Replacement and result delivery follow the current orchestrator
+lifecycle instructions. When the scope or the retry strategy changes, apply the
+existing GitHub re-approval and failure handling rules.
 
-Record the model selection, the fallback, and the escalation in the work item
-task and dispatch execution information of the orchestrator. Do not add a model
-field to GitHub. Record the reason for the decision under the existing rules
-only when the model selection changes the scope, the completion criteria, the
-risk, or the retry strategy.
-
-Use a compatible default worker when a lightweight model is unavailable or the
-runtime cannot enforce read-only. Do not use a cross-platform fallback when the
-other platform cannot apply the needed instructions and tools identically. When
-no compatible default worker exists either, do not start the work item task.
-Treat it as waiting on orchestrator capacity or on the execution environment,
-and do not repeat a failed dispatch with the same model and strategy.
+Do not use another platform when it cannot apply the needed instructions,
+tools, input, permissions, and result format equivalently. When no compatible
+worker exists, do not start the work item task. Treat it as waiting on
+orchestrator capacity or on the execution environment, and do not repeat a
+failed dispatch with the same cause and strategy.
 
 ## Worker capability contract
 
@@ -343,6 +327,7 @@ comparable.
 Every agent execution platform used for a development or review dispatch meets
 the following.
 
+- It can inspect the target repository and satisfy the [development work contract](../core/OPERATING-MODEL.md#development-work-contract).
 - It can run the verification commands the target repository defines, or report exactly which command it could not run and why.
 - It can produce every item required by [completion reports](#completion-reports).
 - It can reach the question and escalation paths defined in [communication and delegation boundaries](#communication-and-delegation-boundaries).
@@ -408,7 +393,7 @@ is not a [fast path](../core/OPERATING-MODEL.md#fast-path) candidate.
 1. The coordinator confirms the valid approval in GitHub and the state of the target issues.
 2. The coordinator creates one execution batch for one execution plan and builds a work item task graph per issue.
 3. The orchestrator assigns a workspace and a worker to each independent work item task and dispatches it.
-4. The worker reads the target repository instructions and applies its harness procedures inside the approved scope.
+4. The worker satisfies the development work contract through its harness procedure inside the approved scope.
 5. A worker question reaches the coordinator through the orchestrator.
 6. The worker finishes the implementation and the required verification, then sends a completion report that includes the evidence.
 7. The coordinator confirms the issue, the pull request, and the verification evidence, then moves the GitHub item to `Review`.
@@ -545,14 +530,14 @@ The GitHub `Done` judgment follows the completion criteria in
 
 1. The final responsibilities of GitHub, the orchestrator, the worker's harness, and the target repository do not overlap.
 2. The orchestrator alone performs worktrees, workers, dispatches, messages, retries, and cleanup. Not applicable in no-orchestrator mode.
-3. The approved execution plan is used as the design approval input for a worker.
+3. The worker preserves the scope and the design decisions recorded in the approved execution plan, and does not treat an unstated design choice as approved.
 4. Worker questions pass through the orchestrator, and an approved scope change requires GitHub re-approval.
 5. The target repository rules apply first, and a temporary artifact is kept untracked by default.
 6. A completion report alone does not move a GitHub item to `Done`.
 7. The existing execution state is checked before a new execution batch, and execution stops when the state is duplicated or its ownership is unclear. Not applicable in no-orchestrator mode.
 8. A completed worker is settled by reuse, by explicit retention, or by a safe release. Not applicable in no-orchestrator mode.
-9. A lightweight worker meets every lightweight condition, and the runtime enforces its read-only permission.
-10. Platform and model fallback and escalation create no downward quality switch, no hidden work item task, and no approval bypass.
+9. A read-only assistant worker meets every assistant condition, and the runtime enforces its read-only permission.
+10. Worker or platform replacement preserves the required capabilities and creates no hidden work item task or approval bypass.
 11. Every agent execution platform meets the worker capability contract, and a difference in harness procedure changes no gate and no completion evidence requirement.
 12. Each dispatch receives only the minimum capability it needs, and the constraints that could not be enforced and the question and escalation paths are recorded in the handoff.
 13. The stored content is confirmed after a handoff is created and before a worker is attached, and a command's success return is not used as evidence that the handoff was preserved. Not applicable in no-orchestrator mode.

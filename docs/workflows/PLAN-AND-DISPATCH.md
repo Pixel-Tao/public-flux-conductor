@@ -168,7 +168,7 @@ Apply the following when a limit is reached.
 3. Create one work item task per target issue, and deliver the issue link, the scope, the completion criteria, the repository instructions, and the verification method.
 4. Build the work item task graph from the GitHub dependencies and the approved execution order.
 5. Choose the first dispatch targets with the parallel decision table.
-6. Assign an isolated workspace and a worker to each work item task and dispatch it. The worker model follows [worker model routing](../integrations/ORCHESTRATOR.md#worker-model-routing).
+6. Assign an isolated workspace and a worker to each work item task and dispatch it. Worker selection follows [worker capability routing](../integrations/ORCHESTRATOR.md#worker-capability-routing).
 7. Move only the issues whose dispatch creation is confirmed to `In Progress`.
 8. Record the execution batch, the issue to work item task mapping, the work item task to dispatch mapping, and the start results as a comment on the execution plan issue. In no-orchestrator mode, record the issue to work item task mapping and the start results only.
 

@@ -72,15 +72,13 @@ names your tool actually uses. The example below shows one possible tool.
 
 | Key | Value | Required |
 |---|---|---|
-| `agent.platforms` | `claude-code` | Yes |
-| `agent.model_map` | See the table below | No. Defaults to one quality-first model. |
+| `agent.platforms` | `your-agent-platform` | Yes |
 
-| Platform | Default tier | Lightweight read-only tier | Escalation order |
-|---|---|---|---|
-| `claude-code` | `opus`, highest supported effort | `haiku`, default effort | `sonnet` at highest effort, then `opus` at highest effort |
-
-Verify what an alias resolves to before each dispatch. This table never
-overrides the platform's current model catalog.
+Record only the platforms available to the orchestrator. Do not record a model,
+reasoning setting, tier, alias, or fallback order. Any model may be used when
+the resulting worker satisfies
+[worker capability routing](../integrations/ORCHESTRATOR.md#worker-capability-routing)
+and the [worker capability contract](../integrations/ORCHESTRATOR.md#worker-capability-contract).
 
 ## Optional skills
 
