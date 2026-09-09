@@ -155,7 +155,7 @@ orchestrator controls the execution lifecycle.
 
 The coordinator confirms the following before a dispatch.
 
-- A comment whose text is exactly the phrase defined by `github.approval_phrase` exists after the last body edit of the execution plan, as defined in [execution plans and approval](TRACKER-GITHUB.md#execution-plans-and-approval).
+- A comment whose text exactly matches the current approval text exists after the last body edit of the execution plan, as defined in [execution plans and approval](TRACKER-GITHUB.md#execution-plans-and-approval).
 - The target issue and the execution scope match the approved execution plan.
 - The target issue is in `Planned`.
 - The work item task dependencies and the groups that can run in parallel are clear.

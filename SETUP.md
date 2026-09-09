@@ -30,9 +30,9 @@ When the user does not know a value, skip it and record it as unresolved.
    ask for its URL. If no, guide the user through
    [creating the central project](docs/integrations/TRACKER-GITHUB.md#creating-the-central-project)
    and let the user perform the creation, then ask for the URL.
-4. **Approval phrase and approvers.** Which exact comment text records approval?
-   It must be one fixed phrase. Which GitHub logins may leave it? Only a comment
-   by one of those logins is a valid approval record.
+4. **Approvers.** Which GitHub logins may approve an execution plan? Only an
+   exact approval text entered by one of those logins is a valid approval
+   record. The tracker guide defines the text for each plan.
 5. **Agent platforms.** Which agent platforms are in use? Record their names.
    Do not bind the environment to a model or a reasoning setting. Worker
    selection follows
@@ -90,9 +90,8 @@ Run these steps when `language` is not `en`.
 
    Separately from that file list, inside a document that is translated, never
    translate a literal command token, a variable key, or a state value. The
-   tokens `fast path:`, `standard workflow:`, and
-   `approve execution plan #<number>`, and the `Status` and `Priority` field
-   names and their values, stay in English.
+   tokens `fast path:` and `standard workflow:`, and the `Status` and `Priority`
+   field names and their values, stay in English.
 3. Fix every relative link path and anchor in the translated documents so each
    one matches the translated headings.
 4. Fix the relative links and anchors in `docs/env/ENVIRONMENT.example.md`,
@@ -107,9 +106,9 @@ Run these steps when `language` is not `en`.
 5. Verify the result before reporting. Confirm that every relative link in every
    changed file resolves to a file that exists, and that every anchor matches a
    heading actually present in the target file. Confirm that `fast path:`,
-   `standard workflow:`, `approve execution plan #<number>`, and the `Status` and
-   `Priority` field names and values are still in English. List every file that
-   failed a check. Do not report the switch as complete while a check fails.
+   `standard workflow:`, and the `Status` and `Priority` field names and values
+   are still in English. List every file that failed a check. Do not report the
+   switch as complete while a check fails.
 6. Do not modify anything under `archive/en/` after step 1. It is the reference
    copy, and it wins when a translation and its original conflict.
 7. Report any document that could not be translated and why.

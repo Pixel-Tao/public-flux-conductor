@@ -29,18 +29,19 @@ every value shown on this page is an example rather than a real one.
 | `github.project_url` | `https://github.com/users/your-account/projects/1` | Yes. Without it, do not dispatch. |
 | `github.coordination_repo` | `your-account/your-coordination-repo` | Yes. Execution plan issues live here. |
 | `github.managed_scope` | Repositories owned by `your-account` | Yes |
-| `github.approval_phrase` | `approved` | Yes. The exact comment text that records approval. |
 | `github.approvers` | `your-account` | Yes. Only a comment by one of these logins is a valid approval. |
 
 Default `github.coordination_repo` to the fork itself, which is
 [the coordination repository](../../AGENTS.md#role). Record a different
 repository only when the execution plan issues live outside the fork.
 
-The approval phrase is compared exactly. Choose one phrase and do not vary it.
+The [tracker guide](../integrations/TRACKER-GITHUB.md#execution-plans-and-approval)
+defines an approval text for each execution plan. Do not add a local phrase
+override.
 
 An approval comment by a login outside `github.approvers` is not an approval
-record, whatever its text. A public fork lets anyone comment on an execution plan
-issue, so this list is the boundary rather than the phrase.
+record, whatever its text. A public fork lets anyone comment on an execution
+plan issue, so this list remains an approval boundary.
 
 ## Orchestrator
 

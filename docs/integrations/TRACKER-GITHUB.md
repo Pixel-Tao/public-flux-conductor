@@ -273,7 +273,30 @@ following format at the top of the body, regardless of the body length.
 - Execution order and parallel groups: ...
 - Completion criteria: ...
 - Main risks: ...
+- Approval text: ...
 ```
+
+The execution plan is not valid for approval until GitHub assigns its issue
+number and the coordinator adds the final `Approval text` to the body. Move the
+included target issues to `Planned` only after that update.
+
+Write the approval text under all of the following rules.
+
+- Use the language named by `language` in the environment file.
+- Keep the complete text on one line and within 80 characters, counting spaces.
+- Use only letters, decimal digits, and single spaces. Use no punctuation or symbols.
+- Include the execution plan number, the main outcome, and an explicit approval intent.
+- State the overall outcome instead of listing every issue, implementation detail, reason, or risk.
+
+For example, an English approval text can be the following.
+
+```text
+I approve execution plan 42 to move the primary button to the top
+```
+
+If the overall outcome cannot be stated accurately within the limit, split the
+execution plan under the existing batching rules. When requesting approval,
+show the approval text by itself and tell the user to enter it exactly.
 
 Include the following detail after the summary.
 
@@ -301,32 +324,31 @@ An execution plan that contains exactly one issue meeting the
 condition that the central project does not already track the work, may consist
 of the `At a glance` block alone. One issue carries no execution order, no parallel
 group, and no cross-repository conflict, so the detail items add nothing. Every
-gate applies unchanged, including the approver, the approval phrase, the
+gate applies unchanged, including the approver, the approval text, the
 `Planned` state, and the `Done` criteria.
 
 Move the target issues included in an execution plan to `Planned`.
 
 A valid approval record is a comment left on the execution plan issue after the
 last edit of its body, whose author login is listed in `github.approvers` and
-whose text is exactly the phrase defined by `github.approval_phrase`, both in
-[the environment file](../env/ENVIRONMENT.example.md). The user leaves this
-comment on GitHub directly, or instructs the agent with exactly
-`approve execution plan #<number>`. Any other wording is not an approval
-instruction, and a comment by any other login is not an approval record.
+whose text exactly matches the current `Approval text` in the issue body. The
+user enters that text as a GitHub comment or in conversation. Any other wording
+is not an approval instruction, and a comment by any other login is not an
+approval record.
 
 An agent that receives the conversational instruction confirms the following
 conditions.
 
 - The number points at an issue in the coordination repository.
 - That issue is an execution plan whose target issues and execution scope are identifiable.
+- The instruction exactly matches the current approval text in that issue.
 - The included target issues are in `Planned` and carry no new blocker.
 
 When all conditions hold, the agent leaves a comment whose text is exactly the
-phrase defined by `github.approval_phrase` and starts the existing dispatch
-procedure. When any condition fails, the agent performs neither the comment nor
-the dispatch, and reports the reason to the user. This conversational
-instruction does not bypass the approval gate. It is a shortcut that produces
-the same approval comment.
+approval text and starts the existing dispatch procedure. When any condition
+fails, the agent performs neither the comment nor the dispatch, and reports the
+reason to the user. This conversational instruction does not bypass the
+approval gate. It is a shortcut that produces the same approval comment.
 
 When the body, the target issues, the scope, or the completion criteria change
 after approval, void the approval, return the related items to `Ready`, and get

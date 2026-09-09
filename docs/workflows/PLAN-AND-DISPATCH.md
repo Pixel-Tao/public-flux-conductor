@@ -71,21 +71,22 @@ Move the included project items to `Planned` and keep that state while approval
 is pending. The state values follow
 [work item states](../core/OPERATING-MODEL.md#work-item-states).
 
-Approve an execution plan as a whole only. The user leaves a comment on GitHub
-directly whose text is exactly the phrase defined by `github.approval_phrase`,
-or instructs the agent with exactly `approve execution plan #<number>`. An agent
-that receives the conversational instruction verifies the conditions in
+Approve an execution plan as a whole only. Show the current approval text by
+itself and tell the user to enter it exactly. The user leaves that text as a
+GitHub comment or enters it in conversation. An agent that receives the
+conversational instruction verifies the conditions in
 [execution plans and approval](../integrations/TRACKER-GITHUB.md#execution-plans-and-approval)
 and, only when the verification succeeds, leaves a comment with exactly that
-phrase on that issue and continues this workflow. When the verification fails,
-the agent performs neither the comment nor the dispatch, and reports the reason.
+text on the issue and continues this workflow. When the verification fails, the
+agent performs neither the comment nor the dispatch, and reports the reason.
 
 Before approving, the user may request an understanding briefing or check of
 the execution plan, as defined in
 [understanding support](../core/OPERATING-MODEL.md#understanding-support).
 
-A valid approval record is a comment by an approver whose text is exactly that
-phrase and which was left after the last edit of the execution plan body.
+A valid approval record is a comment by an approver whose text exactly matches
+the current approval text and which was left after the last edit of the
+execution plan body.
 Immediately before creating the execution batch, confirm again the approval
 route, the comment author, the exact comment text, the time of the last body
 edit, the included issues, the `Planned` state, and the absence of a new blocker.
@@ -215,7 +216,7 @@ development cycle of roadmap loop engineering.
 
 Confirm the following before ending the workflow.
 
-1. The approval comment carries exactly the phrase defined by `github.approval_phrase`, and it was left after the last body edit.
+1. The approval comment exactly matches the current approval text, and it was left after the last body edit.
 2. One execution plan corresponds to one execution batch. Not applicable in no-orchestrator mode.
 3. The included issues and the work item tasks correspond one to one.
 4. The work item task graph preserves the GitHub dependencies and the approved order.

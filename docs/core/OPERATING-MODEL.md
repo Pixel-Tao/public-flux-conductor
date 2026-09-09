@@ -50,10 +50,10 @@ The current operating model assumes a single operator. The logins listed in
 the only approvers, and a comment by any other login is not an approval record.
 Add role-based permissions as a separate policy when real collaborators appear.
 
-The approval gate is an audit record rather than a security boundary. The agent
-itself writes the approval comment on the `approve execution plan #<number>`
-shortcut, so the gate holds only as far as the agent follows it. Read the record
-as evidence of intent, not as proof that a separate party approved.
+The approval gate is an audit record rather than a security boundary. On the
+conversational approval route the agent writes the approval comment itself, so
+the gate holds only as far as the agent follows it. Read the record as evidence
+of intent, not as proof that a separate party approved.
 
 ## Instruction boundaries
 
@@ -353,19 +353,14 @@ The full procedure from writing a plan to dispatching it is
 [plan and dispatch](../workflows/PLAN-AND-DISPATCH.md).
 
 The user approves in one of two ways. An approver leaves a comment on the
-execution plan issue whose text is exactly the phrase defined by
-`github.approval_phrase` in
-[the environment file](../env/ENVIRONMENT.example.md). Alternatively, the user
-instructs the agent in conversation with exactly
-`approve execution plan #<number>`. Any other wording is not an approval
-instruction. An agent that receives the conversational instruction confirms
-that the number is an execution plan issue in the coordination repository and
-that the plan is currently executable. Only when both checks succeed does the
-agent leave a comment with exactly that phrase and then execute. When a check
-fails, the agent performs neither the comment nor the dispatch. When the scope
-changes before approval, update the execution plan and get approval again. When
-the scope changes after approval, void the existing approval, record the change
-in GitHub, and get approval again.
+execution plan issue whose text exactly matches the approval text in the plan,
+or the user enters that same text in conversation. Any other wording is not an
+approval instruction. On the conversational route the agent confirms that the
+plan is currently executable, then leaves a comment with exactly that text and
+executes. When a check fails, the agent performs neither the comment nor the
+dispatch. When the scope changes before approval, update the execution plan and
+get approval again. When the scope changes after approval, void the existing
+approval, record the change in GitHub, and get approval again.
 
 ## Tracker and orchestrator mapping
 
@@ -401,7 +396,7 @@ performs the execution lifecycle directly, as defined in
 
 1. The agent reviews the `Ready` items of the central project.
 2. The agent writes an execution plan based on dependencies and possible conflicts, then moves the items to `Planned`.
-3. The user leaves the approval phrase as a comment on the execution plan issue, or instructs the agent to do so, which produces a verified approval comment.
+3. The user enters the approval text from the execution plan on GitHub or in conversation, which produces a verified approval comment.
 4. The coordinator creates an execution batch and a work item task graph from the approved execution plan.
 5. The coordinator dispatches the independent work item tasks first and manages questions and progress through orchestrator messages.
 6. The worker follows the development work contract through its harness procedure, implements, verifies, and opens a pull request under the target repository rules.
@@ -445,7 +440,7 @@ The following rules apply to both forms.
 
 - Present the explanation before any question. Do not present questions alone.
 - The user may switch a `check` to a `briefing` at any time.
-- The confirmation phrase must differ from `github.approval_phrase`, and the user returns it in conversation only, never as a GitHub comment.
+- The confirmation phrase must differ from the current approval text, and the user returns it in conversation only, never as a GitHub comment.
 - Recording a check result is a comment, not a scope or completion criteria change. It does not void an approval.
 - Neither form replaces the approval record, the merge confirmation record, or any other existing gate.
 - The generated page or file follows [temporary artifacts](../integrations/ORCHESTRATOR.md#temporary-artifacts) and is not committed.

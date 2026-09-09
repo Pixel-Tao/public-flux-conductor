@@ -318,7 +318,7 @@ The following events are grounds for waking a coordinator again.
 - `automation.interval` in [the environment file](../env/ENVIRONMENT.example.md) defines the cadence of the state reconciliation point. Its baseline value is ten minutes. A cron expression such as `*/10 * * * *` is one example of that baseline, not the definition of the cadence. Treat a cadence change as a user decision inside the execution automation scope.
 - The pre-query judges on state. Do not use a time-based condition such as `updated:>=`, because the coordinator's own comment counts as an update and creates a self-triggering loop.
 - The judgment condition is whether unhandled work remains in GitHub. The following cases qualify.
-  - An open execution plan carries a valid comment whose text is exactly the phrase defined by `github.approval_phrase`, and its target issue is not yet `In Progress`.
+  - An open execution plan carries a valid comment whose text exactly matches the current approval text, and its target issue is not yet `In Progress`.
   - A target issue is `In Progress` and its linked pull request is merged.
   - The blocking cause of a `Blocked` item is resolved.
 - Do not judge from the mere existence of an open execution plan. Confirm the approval and the target issue state together.

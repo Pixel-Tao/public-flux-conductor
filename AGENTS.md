@@ -59,7 +59,7 @@ language named by `language` in
 ## Execution gate
 
 - Do not dispatch before a valid approval. The approval methods and the verification criteria follow [execution plans and approval](docs/integrations/TRACKER-GITHUB.md#execution-plans-and-approval).
-- The user may instruct the agent with exactly `approve execution plan #<number>` to request the approval comment record and the dispatch.
+- The user approves by entering exactly the approval text recorded in the current execution plan.
 - When the scope changes after approval, void the existing approval, record the change in GitHub, and get approval again.
 - Record a decision that changes scope, priority, or completion criteria in GitHub as well, not in the orchestrator alone.
 - Do not move a GitHub work item to `Done` on a completion report alone.
